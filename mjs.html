@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.red{
+				color: #f00;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="divBox">
+			div1
+			<span>span1</span>
+			<span class="span2">span2</span>
+		</div>
+		
+		<script src="mjs.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			/**
+			 * DOM加载完成
+			 */
+			mjs(function(){
+				console.log('loaded');
+			})
+			
+			/**
+			 * 获取内容和属性
+			 */
+			/*
+			console.log(mjs('.divBox').html()) 
+			console.log(mjs('.divBox span').html())
+			console.log(mjs('.divBox span').text())
+			mjs('.divBox span').text('我是新的内容');
+			console.log(mjs('span',mjs('.divBox')[0]).html())
+			mjs('.divBox').attr('name','divBox');
+			console.log(mjs('.divBox').attr('name'))
+			*/
+			
+			/**
+			 * 过滤查找
+			 */
+			console.log(mjs('.divBox').find('.span2').html())
+			console.log(mjs('.divBox span').first().html())
+			console.log(mjs('.divBox span').last().html())
+			console.log(mjs('.divBox span').eq(1).html())
+			console.log(mjs('.divBox span').eq(1).parent().html())
+
+			/**
+			 * HTML添加及删除元素
+			 */
+			mjs('.divBox').prepend('<ul><li>prepend</li></ul>')
+			mjs('.divBox').append('<ul><li>append</li></ul>')
+			mjs('.divBox').before('<ul><li>before</li></ul>')
+			mjs('.divBox').after('<ul><li>after</li></ul>')
+			// mjs('.divBox').remove();
+	
+			/**
+			 * HTML css类
+			 */
+			// hasClass
+			console.log(mjs(".divBox").hasClass('divBox'))
+			// addClass
+			mjs(".divBox").addClass('red')
+			// removeClass
+			mjs(".divBox").removeClass('red')
+			// toggleClass
+			/mjs(".divBox").toggleClass('red')
+			
+			/**
+			 * HTML css方法
+			 */
+			console.log(mjs(".divBox").css("color"));
+			mjs(".divBox").css("color","red");
+			mjs(".divBox").css({
+				"width":"200px",
+				"color":"white",
+				"background-color":"#98bf21",
+				"font-family":"Arial",
+				"font-size":"20px",
+				"padding":"5px"
+			});
+			mjs('.divBox').css(
+				'background-color',function(){
+					return '#F00'
+				}
+			)	
+		</script>
+	</body>
+</html>
