@@ -1,3 +1,8 @@
+/*!
+ * =====================================================
+ * MJS v0.0.2 (https://github.com/zhaomenghuan/mjs)
+ * =====================================================
+ */
 (function(w,undefined) {
 	// 构造函数mjs
 	var mjs = function(selector, context) {
@@ -24,18 +29,25 @@
 				return mjs.ready(selector);
 			}
 			else if(typeof selector === 'string'){
+				var re = /<(.+?)>/g;
 				var selector = selector.trim();
 				var context = context || document;
-				var el = context.querySelectorAll(selector);
-				var dom = Array.prototype.slice.call(el);
-				var length = dom.length;
-				for (var i = 0; i < length; i++) {
-					this[i] = dom[i];
-				}
-				this.context = context;
-				this.selector = selector;
-				this.length = length;
-				return this;
+				var dom = null;
+				
+				if((match = re.exec(selector))!==null){
+					return document.createElement(match[1]);
+				}else{
+					var el = context.querySelectorAll(selector);
+					var dom = Array.prototype.slice.call(el);
+					var length = dom.length;
+					for (var i = 0; i < length; i++) {
+						this[i] = dom[i];
+					}
+					this.context = context;
+					this.selector = selector;
+					this.length = length;
+					return this;
+				}	
 			}	
 		},
 		html: function (content) {
@@ -50,8 +62,8 @@
         	}
 		},
 		text: function (val) {
-		    if (val === undefined && this[0].nodeType === 1) {
-		        return this[0].innerText;
+		    if (!arguments.length) {
+		    	return this[0].textContent.trim();
 		    } else {
 		        for (var i = 0; i < this.length; i++) {
 		            this[i].innerText = val;
@@ -174,6 +186,10 @@
 		}
 	}
 	
+	/**
+	 * DOM ready
+	 * @param {Object} callback
+	 */
 	mjs.ready = function (callback) {
 		var readyRE = /complete|loaded|interactive/;
 		if (readyRE.test(document.readyState)) {
@@ -184,7 +200,46 @@
 			}, false);
 		}
 		return this;
-    };
+	};
+	
+    /**
+     * javascript引擎
+     * @param {Object} tpl
+     * @param {Object} data
+     */
+    mjs.tpl = function(tpl, data) {
+	    var re = /{{(.+?)}}/g, 
+	    	cursor = 0
+			reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g,	
+	        code = 'var r=[];\n';
+
+		// 解析html
+		function parsehtml(line) {
+			// 单双引号转义，换行符替换为空格,去掉前后的空格
+			line = line.replace(/('|")/g, '\\$1').replace(/\n/g, ' ').replace(/(^\s+)|(\s+$)/g,"");
+			code +='r.push("' + line + '");\n';
+		}
+		
+		// 解析js代码		
+		function parsejs(line) {   
+			// 去掉前后的空格
+			line = line.replace(/(^\s+)|(\s+$)/g,"");
+		    code += line.match(reExp)? line + '\n' : 'r.push(' + line + ');\n';
+		}	
+	    
+	    while((match = re.exec(tpl))!== null) {
+	    	// 开始标签  {{ 前的内容和结束标签 }} 后的内容
+	    	parsehtml(tpl.slice(cursor, match.index))
+	    	// 开始标签  {{ 和 结束标签 }} 之间的内容
+	    	parsejs(match[1])
+	    	// 每一次匹配完成移动指针
+	        cursor = match.index + match[0].length;
+	    }
+	    // 最后一次匹配完的内容
+	    parsehtml(tpl.substr(cursor, tpl.length - cursor));
+	    code += 'return r.join("");';
+	    return new Function(code.replace(/[\r\t\n]/g, '')).apply(data);
+	}
 	
 	mjs.fn.init.prototype = mjs.fn;	
 	// 为window全局变量添加mjs对象
