@@ -24,13 +24,23 @@
 			mjs(function(){
 				console.log('loaded');
 			})
+			/*
+			mjs.ready(function(){
+        console.log('loaded');
+			})
+			*/
+			
+			var  Arr = [2,4,6,8,10];
+      mjs.each(Arr, function(item, index) {
+        console.log("item:"+item);
+      });
 			
 			/**
-			 * 获取内容和属性
+			 * 获取设置内容和属性
 			 */
 			/*
 			console.log(mjs('.divBox').html()) 
-			console.log(mjs('.divBox span').html())
+			mjs('.divBox').html('<p>我是新内容</p>');
 			console.log(mjs('.divBox span').text())
 			mjs('.divBox span').text('我是新的内容');
 			console.log(mjs('span',mjs('.divBox')[0]).html())

@@ -1,6 +1,6 @@
 /*!
  * =====================================================
- * MJS v0.0.2 (https://github.com/zhaomenghuan/mjs)
+ * MJS v0.0.3 (https://github.com/zhaomenghuan/mjs)
  * =====================================================
  */
 (function(w,undefined) {
@@ -20,11 +20,11 @@
 			}
 			else if(typeof selector === 'object'){
 				var selector = [selector];
-                for (var i = 0; i < selector.length; i++) {
-                    this[i] = selector[i];
-                }
-                this.length = selector.length;
-                return this;
+        for (var i = 0; i < selector.length; i++) {
+          this[i] = selector[i];
+        }
+        this.length = selector.length;
+        return this;
 			}else if(typeof selector === 'function'){
 				return mjs.ready(selector);
 			}
@@ -51,25 +51,25 @@
 			}	
 		},
 		html: function (content) {
-			if (content === undefined && this[0].nodeType === 1) {
-        		return this[0].innerHTML.trim();
-        	}else{
-        		var len = this.length;
+			if(content === undefined && this[0].nodeType === 1){
+        return this[0].innerHTML.trim();
+      }else{
+        var len = this.length;
 				for (var i = 0; i < len; i++) {
 					this[i].innerHTML = content;
 				}
 				return this;
-        	}
+      }
 		},
 		text: function (val) {
-		    if (!arguments.length) {
-		    	return this[0].textContent.trim();
-		    } else {
-		        for (var i = 0; i < this.length; i++) {
-		            this[i].innerText = val;
-		        }
-		        return this;
-		    }
+	    if (!arguments.length) {
+	    	return this[0].textContent.trim();
+	    } else {
+        for (var i = 0; i < this.length; i++) {
+            this[i].innerText = val;
+        }
+        return this;
+	    }
 		},
 		attr: function (attr,val) {
 			var len = this.length;
@@ -79,49 +79,49 @@
 					if(typeof obj === 'string'){
 						return this[i].getAttribute(attr);
 					}else if(typeof obj === 'object'){
-				        for(var attr in obj){
-				        	this[i].setAttribute(attr,obj[attr]);
+				    for(var attr in obj){
+				      this[i].setAttribute(attr,obj[attr]);
 						}  	
 					}
 				}else{
-		            this[i].setAttribute(attr,val);
+		      this[i].setAttribute(attr,val);
 				}
 			}		
 		},
 		prepend: function(str) {
 			var len = this.length;
-    		for (var i = 0; i < len; i++) {
-		        this[i].insertAdjacentHTML('afterbegin', str);
-		    }
-		    return this;
+  		for (var i = 0; i < len; i++) {
+	      this[i].insertAdjacentHTML('afterbegin', str);
+	    }
+	    return this;
 		},
 		append: function (str) {
-		    var len = this.length;
-    		for (var i = 0; i < len; i++) {
-		        this[i].insertAdjacentHTML('beforeend', str);
-		    }
-		    return this;
+	    var len = this.length;
+  		for (var i = 0; i < len; i++) {
+	      this[i].insertAdjacentHTML('beforeend', str);
+	    }
+	    return this;
 		},
 		before: function (str) {
-		    var len = this.length;
-    		for (var i = 0; i < len; i++) {
-		    	this[i].insertAdjacentHTML('beforebegin', str);
-		    }
-		    return this;
+	    var len = this.length;
+  		for (var i = 0; i < len; i++) {
+	    	this[i].insertAdjacentHTML('beforebegin', str);
+	    }
+	    return this;
 		},
 		after: function (str) {
-		    var len = this.length;
-    		for (var i = 0; i < len; i++) {
-		        this[i].insertAdjacentHTML('afterend', str);
-		    }
-		    return this;
+	    var len = this.length;
+  		for (var i = 0; i < len; i++) {
+	      this[i].insertAdjacentHTML('afterend', str);
+	    }
+	    return this;
 		},
 		remove: function () {
 			var len = this.length;
 			for (var i = 0; i < len; i++) {
 				this[i].parentNode.removeChild(this[i]);
 			}
-    		return this;
+      return this;
 		},
 		hasClass: function (cls) {
 			return this[0].classList.contains(cls);
@@ -155,7 +155,7 @@
 					if(typeof obj === 'string'){
 						return getComputedStyle(this[i],null)[attr];
 					}else if(typeof obj === 'object'){
-				        for(var attr in obj){
+				    for(var attr in obj){
 							this[i].style[attr] = obj[attr];
 						}  	
 					}
@@ -165,8 +165,8 @@
 					}else{
 						this[i].style[attr] = val;
 					}   
-		        } 
-	       	}
+		    } 
+	    }
 			return this;
 		},
 		find: function(selector){			
@@ -202,16 +202,22 @@
 		return this;
 	};
 	
-    /**
-     * javascript引擎
-     * @param {Object} tpl
-     * @param {Object} data
-     */
-    mjs.tpl = function(tpl, data) {
-	    var re = /{{(.+?)}}/g, 
-	    	cursor = 0
-			reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g,	
-	        code = 'var r=[];\n';
+	/**
+	 * each 函数
+	 */
+	mjs.each = function (context, item, index){
+	  [].forEach.call(context, function(item, index) {
+      
+    });
+	};
+	
+  /**
+   * javascript引擎
+   * @param {Object} tpl
+   * @param {Object} data
+   */
+  mjs.tpl = function(tpl, data) {
+	  var re = /{{(.+?)}}/g,cursor = 0,reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g,	code = 'var r=[];\n';
 
 		// 解析html
 		function parsehtml(line) {
@@ -224,23 +230,23 @@
 		function parsejs(line) {   
 			// 去掉前后的空格
 			line = line.replace(/(^\s+)|(\s+$)/g,"");
-		    code += line.match(reExp)? line + '\n' : 'r.push(' + line + ');\n';
+		  code += line.match(reExp)? line + '\n' : 'r.push(' + line + ');\n';
 		}	
 	    
-	    while((match = re.exec(tpl))!== null) {
-	    	// 开始标签  {{ 前的内容和结束标签 }} 后的内容
-	    	parsehtml(tpl.slice(cursor, match.index))
-	    	// 开始标签  {{ 和 结束标签 }} 之间的内容
-	    	parsejs(match[1])
-	    	// 每一次匹配完成移动指针
-	        cursor = match.index + match[0].length;
-	    }
-	    // 最后一次匹配完的内容
-	    parsehtml(tpl.substr(cursor, tpl.length - cursor));
-	    code += 'return r.join("");';
-	    return new Function(code.replace(/[\r\t\n]/g, '')).apply(data);
+    while((match = re.exec(tpl))!== null) {
+    	// 开始标签  {{ 前的内容和结束标签 }} 后的内容
+    	parsehtml(tpl.slice(cursor, match.index))
+    	// 开始标签  {{ 和 结束标签 }} 之间的内容
+    	parsejs(match[1])
+    	// 每一次匹配完成移动指针
+      cursor = match.index + match[0].length;
+    }
+    // 最后一次匹配完的内容
+    parsehtml(tpl.substr(cursor, tpl.length - cursor));
+    code += 'return r.join("");';
+    return new Function(code.replace(/[\r\t\n]/g, '')).apply(data);
 	}
-	
+  
 	mjs.fn.init.prototype = mjs.fn;	
 	// 为window全局变量添加mjs对象
 	w.mjs = w.m = mjs;
