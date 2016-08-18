@@ -15,6 +15,19 @@
 			<span>span1</span>
 			<span class="span2">span2</span>
 		</div>
+		<div id="content"></div>        
+		<script type="text/tpl" id="template">
+			<p>name: {{this.name}}</p>
+			<p>age: {{this.profile.age}}</p>
+			{{if (this.sex) {}}
+				<p>sex: {{this.sex}}</p>
+			{{}}}
+			<ul>
+				{{for(var i in this.skills){}}
+				<li>{{this.skills[i]}}</li>
+				{{}}}
+			</ul>
+		</script>
 		
 		<script src="mjs.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -29,11 +42,6 @@
         		console.log('loaded');
 			})
 			*/
-			
-			var  Arr = [2,4,6,8,10];
-		    mjs.each(Arr, function(item, index) {
-		        console.log("item:"+item);
-		    });
 			
 			/**
 			 * 获取设置内容和属性
@@ -96,6 +104,19 @@
 					return '#F00'
 				}
 			)	
+			
+			/**
+			 * js模板引擎
+			 */
+			var tpl = document.getElementById("template").innerHTML.toString();
+			document.getElementById("content").innerHTML = mjs.tpl(tpl,{
+				name: "zhaomenghuan",
+				profile: { 
+					age: 22 
+				},
+				sex: 'man',
+				skills: ['html5','javascript','android']
+			});
 		</script>
 	</body>
 </html>

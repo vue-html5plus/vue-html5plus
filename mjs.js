@@ -20,11 +20,11 @@
 				return this;
 			}else if(typeof selector === 'object'){
 				var selector = [selector];
-        for (var i = 0; i < selector.length; i++) {
-            this[i] = selector[i];
-        }
-        this.length = selector.length;
-        return this;
+				for (var i = 0; i < selector.length; i++) {
+					this[i] = selector[i];
+				}
+				this.length = selector.length;
+				return this;
 			}else if(typeof selector === 'function'){
 				return mjs.ready(selector);
 			}else if(typeof selector === 'string'){
@@ -51,23 +51,23 @@
 		html: function (content) {
 			if(content === undefined && this[0].nodeType === 1){
 				return this[0].innerHTML.trim();
-      } else {
-        var len = this.length;
+			} else {
+				var len = this.length;
 				for (var i = 0; i < len; i++) {
-    			this[i].innerHTML = content;
-    		}
-    		return this;
-      }
+					this[i].innerHTML = content;
+				}
+				return this;
+			}
 		},
 		text: function (val) {
-	    if (!arguments.length) {
-	    	return this[0].textContent.trim();
-	    } else {
-        for (var i = 0; i < this.length; i++) {
-            this[i].innerText = val;
-        }
-        return this;
-	    }
+			if (!arguments.length) {
+				return this[0].textContent.trim();
+			} else {
+				for (var i = 0; i < this.length; i++) {
+					this[i].innerText = val;
+				}
+				return this;
+			}
 		},
 		attr: function (attr,val) {
 			var len = this.length;
@@ -77,49 +77,49 @@
 					if(typeof obj === 'string'){
 						return this[i].getAttribute(attr);
 					}else if(typeof obj === 'object'){
-    				for(var attr in obj){
-    				  this[i].setAttribute(attr,obj[attr]);
-    				}
-				  }
+						for(var attr in obj){
+						  this[i].setAttribute(attr,obj[attr]);
+						}
+					}
 				} else {
-		      this[i].setAttribute(attr,val);
+					this[i].setAttribute(attr,val);
 				}
 			}
 		},
 		prepend: function(str) {
 			var len = this.length;
-  		for (var i = 0; i < len; i++) {
-	      this[i].insertAdjacentHTML('afterbegin', str);
-	    }
-      return this;
+			for (var i = 0; i < len; i++) {
+				this[i].insertAdjacentHTML('afterbegin', str);
+			}
+			return this;
 		},
 		append: function (str) {
-      var len = this.length;
-	    for (var i = 0; i < len; i++) {
-         this[i].insertAdjacentHTML('beforeend', str);
-      }
-	    return this;
+			var len = this.length;
+			for (var i = 0; i < len; i++) {
+				this[i].insertAdjacentHTML('beforeend', str);
+			}
+			return this;
 		},
 		before: function (str) {
-	    var len = this.length;
-	  	for (var i = 0; i < len; i++) {
-		    this[i].insertAdjacentHTML('beforebegin', str);
-		  }
-	    return this;
+			var len = this.length;
+			for (var i = 0; i < len; i++) {
+				this[i].insertAdjacentHTML('beforebegin', str);
+			}
+			return this;
 		},
 		after: function (str) {
-	    var len = this.length;
-      for (var i = 0; i < len; i++) {
-    	  this[i].insertAdjacentHTML('afterend', str);
-    	}
-	    return this;
+			var len = this.length;
+			for (var i = 0; i < len; i++) {
+				this[i].insertAdjacentHTML('afterend', str);
+			}
+			return this;
 		},
 		remove: function () {
 			var len = this.length;
 			for (var i = 0; i < len; i++) {
 				this[i].parentNode.removeChild(this[i]);
 			}
-      return this;
+			return this;
 		},
 		hasClass: function (cls) {
 			return this[0].classList.contains(cls);
@@ -153,7 +153,7 @@
 					if(typeof obj === 'string'){
 						return getComputedStyle(this[i],null)[attr];
 					}else if(typeof obj === 'object'){
-				    for(var attr in obj){
+						for(var attr in obj){
 							this[i].style[attr] = obj[attr];
 						}
 					}
@@ -163,8 +163,8 @@
 					}else{
 						this[i].style[attr] = val;
 					}
-		   	}
-	    }
+				}
+			}
 			return this;
 		},
 		find: function(selector){
@@ -188,39 +188,39 @@
 	 * DOM ready
 	 * @param {Object} callback
 	 */
-		mjs.ready = function (callback) {
-			var readyRE = /complete|loaded|interactive/;
-			if (readyRE.test(document.readyState)) {
+	mjs.ready = function (callback) {
+		var readyRE = /complete|loaded|interactive/;
+		if (readyRE.test(document.readyState)) {
+			callback();
+		} else {
+			document.addEventListener('DOMContentLoaded', function() {
 				callback();
-			} else {
-				document.addEventListener('DOMContentLoaded', function() {
-					callback();
-				}, false);
-			}
-			return this;
-		};
+			}, false);
+		}
+		return this;
+	};
 
-  /**
+	/**
  	 * javascript引擎
-   * @param {Object} tpl
-   * @param {Object} data
-   */
-		mjs.tpl = function(tpl, data) {
-	  	var re = /{{(.+?)}}/g,cursor = 0,reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g,	code = 'var r=[];\n';
+	 * @param {Object} tpl
+     * @param {Object} data
+    */
+	mjs.tpl = function(tpl, data) {
+		var re = /{{(.+?)}}/g,cursor = 0,reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g,	code = 'var r=[];\n';
 
-			// 解析html
-			function parsehtml(line) {
-				// 单双引号转义，换行符替换为空格,去掉前后的空格
-				line = line.replace(/('|")/g, '\\$1').replace(/\n/g, ' ').replace(/(^\s+)|(\s+$)/g, '');
-				code += 'r.push("' + line + '");\n';
-			}
+		// 解析html
+		function parsehtml(line) {
+			// 单双引号转义，换行符替换为空格,去掉前后的空格
+			line = line.replace(/('|")/g, '\\$1').replace(/\n/g, ' ').replace(/(^\s+)|(\s+$)/g, '');
+			code += 'r.push("' + line + '");\n';
+		}
 
-			// 解析js代码
-			function parsejs(line) {
-				// 去掉前后的空格
-				line = line.replace(/(^\s+)|(\s+$)/g, '');
-			  code += line.match(reExp) ? line + '\n' : 'r.push(' + line + ');\n';
-			}
+		// 解析js代码
+		function parsejs(line) {
+			// 去掉前后的空格
+			line = line.replace(/(^\s+)|(\s+$)/g, '');
+		  code += line.match(reExp) ? line + '\n' : 'r.push(' + line + ');\n';
+		}
 
 	    while((match = re.exec(tpl)) !== null) {
 	    	// 开始标签  {{ 前的内容和结束标签 }} 后的内容
@@ -228,7 +228,7 @@
 	    	// 开始标签  {{ 和 结束标签 }} 之间的内容
 	    	parsejs(match[1]);
 	    	// 每一次匹配完成移动指针
-	      cursor = match.index + match[0].length;
+			cursor = match.index + match[0].length;
 	    }
 	    // 最后一次匹配完的内容
 	    parsehtml(tpl.substr(cursor, tpl.length - cursor));
