@@ -204,7 +204,7 @@
  	 * javascript引擎
 	 * @param {Object} tpl
      * @param {Object} data
-    */
+     */
 	mjs.tpl = function(tpl, data) {
 		var re = /{{(.+?)}}/g,cursor = 0,reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g,	code = 'var r=[];\n';
 
