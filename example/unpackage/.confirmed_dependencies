@@ -1,0 +1,14 @@
+{
+	"index.html": {
+		"resources": [
+			"js/vue.js",
+			"js/muibone.js",
+			"fonts/mui.ttf",
+			"js/mui.js",
+			"css/mui.css",
+			"js/vue-h5p.js",
+			"js/vue-html5plus.js",
+			"js/h5pApp.js"
+		]
+	}
+}

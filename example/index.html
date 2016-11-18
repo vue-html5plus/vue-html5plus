@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/mui.css"/>
+</head>
+<body>
+	<div id="app">
+		<header class="mui-bar mui-bar-nav">
+			<button class="mui-btn mui-btn-link">
+				<span class="name">{{city}}</span>
+				<span class="mui-icon mui-icon-arrowdown"></span>
+			</button>
+		    <h1 class="mui-title">{{title}}</h1>
+		</header>
+		<div class="mui-content">
+			<h3 class="mui-subtitle">定位：</h3>
+		    {{location}}
+		    <h3 class="mui-subtitle">数据：</h3>
+		    {{getData}}
+		</div>
+	</div>
+	
+	<script src="html5plus://ready"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/h5pApp.js"></script>
+	<script type="text/javascript">	
+		h5pApp({
+			el: '#app',
+			data: {
+				title: 'hello vue-h5pApp！',
+				city: '',
+				location: '',
+				getData: ''
+			},
+			mounted: function () {
+				console.log('mounted');
+			},
+			domReady: function () {
+				console.log('domReady');
+				console.log(h5pApp('.mui-title').html())
+			},
+			plusReady: {
+				init: function () {
+					console.log('plusReady');
+					h5pApp.get('http://httpbin.org/get').then(function(response){
+						// 绑定数据(h5pApp.vm 或 h5pApp.vm.$data 或 h5pApp.data)
+						h5pApp.data.getData = response.body;
+					}).catch(function(error){
+						console.log(JSON.stringify(error));
+					})
+				},
+				getLocation: function (response) {
+					// 绑定数据
+					h5pApp.data.location = response.message;
+					h5pApp.data.city = response.message.address.city;
+				},
+				getNetworkType: function (response) {
+					console.log(response);
+				}
+			}
+		})
+	</script>
+</body>
+</html>
