@@ -78,10 +78,6 @@
 
 > **h5pApp(config)**
 
-```
-h5pApp(config)
-
 config 可以是一个json对象，也可以是一个字符串。当config是对象时，是作为页面初始化时使用，当config是字符串时，用作选择器，用法同jQuery一致，可以链式调用。
-```
 
 由于是基于Vue.js,如果是新手，对vue.js一脸懵逼，推荐先看看[Vue.js指南](http://cn.vuejs.org/v2/guide/index.html)。5+ App中具体生命周期，主要是plusReady,domReady两个，如果添加了`<script src="html5plus://ready"></script>`,则plus会提前注入，否则会在DOM加载完之后。
