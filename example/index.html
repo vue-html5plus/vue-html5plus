@@ -3,10 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title></title>
+    <title>hello h5pApp！</title>
     <link rel="stylesheet" type="text/css" href="css/mui.css"/>
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
 </head>
 <body>
+	
 	<div id="app">
 		<header class="mui-bar mui-bar-nav">
 			<button class="mui-btn mui-btn-link">
@@ -15,50 +17,61 @@
 			</button>
 		    <h1 class="mui-title">{{title}}</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content mui-content-padded">
 			<h3 class="mui-subtitle">定位：</h3>
-		    {{location}}
-		    <h3 class="mui-subtitle">数据：</h3>
+		    {{position}}
+		    <h3 class="mui-subtitle">网络：</h3>
+		    {{networktype}}
+		    <h3 class="mui-subtitle">ajax：</h3>
 		    {{getData}}
+		    <h3 class="mui-subtitle">爬虫：</h3>
+		    <button type="button" class="mui-btn mui-btn-blue mui-btn-block" v-on:tap="parser">爬虫实例</button>
 		</div>
 	</div>
 	
 	<script src="html5plus://ready"></script>
+	<script src="js/mui.min.js"></script>
 	<script src="js/vue.js"></script>
 	<script src="js/h5pApp.js"></script>
 	<script type="text/javascript">	
 		h5pApp({
 			el: '#app',
 			data: {
-				title: 'hello vue-h5pApp！',
+				title: 'hello h5pApp！',
 				city: '',
-				location: '',
+				position: '',
+				networktype: '',
 				getData: ''
 			},
+			methods: {
+				parser: function () {
+					mui.openWindow('example/parser.html');
+				}
+			},
 			mounted: function () {
-				console.log('mounted');
+				console.log('mounted:'+JSON.stringify(this.$data))
 			},
 			domReady: function () {
-				console.log('domReady');
-				console.log(h5pApp('.mui-title').html())
+				console.log('domReady:'+JSON.stringify(this.$data))
+				console.log(h5pApp('.mui-title').html());
 			},
 			plusReady: {
 				init: function () {
 					console.log('plusReady');
+					// 请求数据的实例
+					var self = this;
 					h5pApp.get('http://httpbin.org/get').then(function(response){
-						// 绑定数据(h5pApp.vm 或 h5pApp.vm.$data 或 h5pApp.data)
-						h5pApp.data.getData = response.body;
+						self.getData = response.body;
 					}).catch(function(error){
 						console.log(JSON.stringify(error));
 					})
 				},
 				getLocation: function (response) {
-					// 绑定数据
-					h5pApp.data.location = response.message;
-					h5pApp.data.city = response.message.address.city;
+					this.position = response.message;
+					this.city = response.message.address.city;
 				},
 				getNetworkType: function (response) {
-					console.log(response);
+					this.networktype = response;
 				}
 			}
 		})

@@ -8,7 +8,37 @@
 			"css/mui.css",
 			"js/vue-h5p.js",
 			"js/vue-html5plus.js",
-			"js/h5pApp.js"
+			"js/h5pApp.js",
+			"js/mui.min.js",
+			"css/app.css"
+		],
+		"refer": [
+			"example/parser.html"
+		]
+	},
+	"example/parser.html": {
+		"resources": [
+			"js/htmlparser.js",
+			"css/mui.min.css",
+			"js/vue.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/h5pApp.js",
+			"css/app.css"
+		],
+		"refer": [
+			"example/browser.html"
+		]
+	},
+	"example/browser.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"css/app.css",
+			"css/progressbar.css",
+			"js/h5pApp.js",
+			"js/progressbar.js"
 		]
 	}
 }

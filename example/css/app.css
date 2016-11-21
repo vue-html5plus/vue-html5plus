@@ -1,0 +1,130 @@
+html,
+body,
+.mui-content{
+	font-family: "PingFangSC-Regular","microsoft yahei";
+	background-color: #efeff4;
+}
+header.mui-bar-nav{
+	background-color: #ff4900;
+	box-shadow: none;
+}
+header.mui-bar-nav a,
+header.mui-bar-nav button,
+header.mui-bar-nav .mui-title{
+	color: #ffffff !important;
+}
+.mui-table-view:before,
+.mui-table-view:after,
+.mui-table-view-cell:after,
+.mui-input-group:before,
+.mui-input-group:after,
+.mui-input-group .mui-input-row:after{
+	background-color: #eeeeee;
+}
+.mui-checkbox input[type=checkbox]:checked:before{
+	color: #ff4900;
+}
+
+body.app-login .app-login-visible{
+	display: block !important;
+}
+body.app-logout .app-login-visible{
+	display: none !important;
+}
+body.app-login .app-logout-visible{
+	display: none !important;
+}
+body.app-logout .app-logout-visible{
+	display: block !important;
+}
+
+/* WebKit browsers */
+input::-webkit-input-placeholder { 
+　　 color: #bobobo;
+	font-size: 16px;
+	font-family: "PingFangSC-Regular","microsoft yahei";
+}
+/* Mozilla Firefox 4 to 18 */
+input:-moz-placeholder {
+　　color: #bobobo;
+	font-size: 16px;
+	font-family: "PingFangSC-Regular","microsoft yahei";
+}
+/* Mozilla Firefox 19+ */
+input::-moz-placeholder {
+　　color: #bobobo;
+	font-size: 16px;
+	font-family: "PingFangSC-Regular","microsoft yahei";
+}
+/* Internet Explorer 10+ */
+input:-ms-input-placeholder {
+　　color: #bobobo;
+	font-size: 16px;
+	font-family: "PingFangSC-Regular","microsoft yahei";
+}
+
+.app-padded-top{
+	margin-top: 15px;
+}
+.app-padded-bottom{
+	margin-bottom: 15px;
+}
+
+/*空白提示*/
+.app-empty-tips{
+	position: absolute;
+	width: 150px;
+	height: 180px;
+	left: 50%;
+	top: 50%;
+	margin-top: -90px;
+	margin-left: -75px;
+}
+.app-empty-tips>img{
+	width: 150px;
+	height: 150px;
+}
+.app-empty-tips>p{
+	font-family: 'PingFangSC-Regular',"microsoft yahei";
+	font-size: 20px;
+	line-height: 30px;
+	color: #666666;
+	text-align: center;
+}
+
+/*自定义弹出层*/
+.app-popover{
+	display: none;
+	position: fixed;
+	width: 60%;
+	height: auto;
+	top: 50%;
+	left: 50%;
+	margin: 0 auto;
+	z-index: 9999;
+	background-color: #fff;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+.app-popover.mui-active{
+	display: block;
+}
+.app-popover ul{
+	list-style: none;
+	margin: 0px;
+	padding: 0px;	
+	text-align: center;		
+}
+.app-popover ul li{
+	line-height: 40px;
+}
+.app-popover ul li:first-child{
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	background-color: #d8d8d8;
+}
+.app-popover ul li:not(:last-child){
+	border-bottom: 1px solid #eeeeee;
+}
