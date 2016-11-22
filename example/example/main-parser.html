@@ -7,14 +7,15 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<style type="text/css">
+			[v-cloak]{
+    			display:none;
+			}
+		</style>
 	</head>
 
 	<body>
-		<div id="app">
-			<header class="mui-bar mui-bar-nav">
-			    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			    <h1 class="mui-title">{{title}}</h1>
-			</header>
+		<div id="app" v-cloak>
 			<div class="mui-content">
 			    <ul class="mui-table-view">
 				    <li class="mui-table-view-cell mui-media" v-for="(item, index) in list" v-on:tap="openView(index)">
@@ -30,20 +31,19 @@
 			</div>
 		</div>
 
-		<script src="../js/mui.min.js"></script>
 		<script src="../js/vue.js"></script>
-		<script src="../js/h5pApp.js"></script>
+		<script src="../js/vue-html5plus.js"></script>
+		<script src="../js/mui.min.js"></script>
 		<script src="../js/htmlparser.js"></script>
 		<script type="text/javascript">
-			h5pApp({
+			VuePlus({
 				el: '#app',
 				data: {
-					title: 'segemntfault',
 					list: ''
 				},
 				plusReady: function () {
 					var self = this;
-					h5pApp.get('https://segmentfault.com/blogs').then(function(response){
+					vp.get('https://segmentfault.com/blogs').then(function(response){
 						var list = htmlparser.segmentfault(response.body);
 						self.list = list;
 					}).catch(function(err){

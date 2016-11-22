@@ -1,11 +1,11 @@
 /*!
  * =====================================================
- * h5pApp v0.0.5 (https://github.com/zhaomenghuan/h5pApp)
+ * VuePlus v0.0.5 (https://github.com/zhaomenghuan/VuePlus)
  * =====================================================
  */
 
 ;(function(){
-  var codeRE = /<(.+?)>/g;
+    var codeRE = /<(.+?)>/g;
 	var idSelectorRE = /^#([\w-]+)$/;
 	var classSelectorRE = /^\.([\w-]+)$/;
 
@@ -36,9 +36,9 @@
 					_plusReady(options.plusReady, $);
 				}
 			}
-
+			// 内置浏览器
 			if(options.browser){
-			     _browser(options.browser);
+			    _browser(options.browser);
 			}
 
 			return $
@@ -66,7 +66,7 @@
 	 * @returns {Array}
 	 */
 	$.qsa = function(selector, context) {
-		context = context || document;
+		var context = context || document;
 		return Array.prototype.slice.call(classSelectorRE.test(selector) ? context.getElementsByClassName(RegExp.$1) : tagSelectorRE.test(selector) ? context.getElementsByTagName(selector) : context.querySelectorAll(selector));
 	};
 
@@ -182,14 +182,14 @@
 			if(options.loaded){
 				_browserWv.addEventListener('loaded', function(){
 					options.loaded();
-				})
+				});
 			}
 
             // 监听关闭
             if(options.close){
 				$.currentWebview().addEventListener('close', function(){
 					options.close();
-				})
+				});
 			}
 
 			//  监听返回键
@@ -202,18 +202,18 @@
 		})
 	}
 
-  $.fn = $.prototype;
+  	$.fn = $.prototype;
 
-  var moduleName = h5pApp = $;
-  if (typeof module !== 'undefined' && typeof exports === 'object') {
-    module.exports = moduleName;
-  } else if (typeof define === 'function' && (define.amd || define.cmd)) {
-    define(function() { return moduleName; });
-  } else {
-    this.moduleName = moduleName;
-  }
+  	var moduleName = VuePlus = vp = $;
+  	if (typeof module !== 'undefined' && typeof exports === 'object') {
+    	module.exports = moduleName;
+  	} else if (typeof define === 'function' && (define.amd || define.cmd)) {
+    	define(function() { return moduleName; });
+  	} else {
+    	this.moduleName = moduleName;
+  	}
 }).call(function() {
-  return this || (typeof window !== 'undefined' ? window : global);
+  	return this || (typeof window !== 'undefined' ? window : global);
 });
 
 /**
@@ -238,34 +238,34 @@
 			document.addEventListener("plusready", callback, false);
 		}
 	}
-})(h5pApp,window);
+})(VuePlus,window);
 
 /**
  * WEBVIEW 相关
  * @param {Object} $
  */
-(function($){
+(function($, window){
 	/**
 	 * 获取当前webview对象
 	 */
-   $.currentWebview = function () {
+    $.currentWebview = function () {
   		return plus.webview.currentWebview();
-  };
+    };
 
 	/**
 	 * 查询Webview窗口是否可后退
 	 */
-  $.historyBack = function (WVObj) {
-  	// 查询Webview窗口是否可后退
-    WVObj.canBack(function(e){
-      var canback=e.canBack;
-      if(canback){
-        WVObj.back();
-      }else{
-        $.currentWebview().close();
-      }
-    });
-  }
+  	$.historyBack = function (WVObj) {
+  		// 查询Webview窗口是否可后退
+    	WVObj.canBack(function(e){
+      		var canback=e.canBack;
+	      	if(canback){
+	        	WVObj.back();
+	      	}else{
+	        	$.currentWebview().close();
+	      	}
+   	 	});
+  	}
 
 	/**
 	 * 返回逻辑
@@ -273,15 +273,52 @@
 	 */
   	$.back = function (callback) {
   		var actionBack = document.querySelector('.mui-action-back');
-		  var listenerType = window.mui ? 'tap' : 'click';
-		  actionBack.addEventListener(listenerType,function () {
-			  typeof callback === 'function' && callback();
-		  });
-		  plus.key.addEventListener("backbutton", function() {
-        typeof callback === 'function' && callback();
-      });
+	  	var listenerType = window.mui ? 'tap' : 'click';
+	  	actionBack.addEventListener(listenerType,function () {
+		  	typeof callback === 'function' && callback();
+	  	});
+	  	plus.key.addEventListener("backbutton", function() {
+        	typeof callback === 'function' && callback();
+      	});
   	}
-})(h5pApp);
+  	
+  	/**
+  	 * 打开页面
+  	 * @param {Object} url
+  	 * @param {Object} id
+  	 * @param {Object} extras
+  	 */
+  	$.openView = function (url, id, extras) {
+  		if(extras && !$.os.plus){
+  			url = $.convertUrl(url, extras);
+  		}
+  		mui.openWindow({
+		    url: url,
+		    id: id,
+		    extras: extras,
+		    show:{
+		      	autoShow:true,
+		      	aniShow: 'pop-in',
+		      	duration: '100'
+		    },
+		    waiting:{
+		      	autoShow:true,
+		      	title:'正在加载...'
+		    }
+		})
+  	}
+  	
+  	/**
+  	 * 获取参数
+  	 */
+  	$.getParam = function () {
+  		if($.os.plus){
+	  		return $.currentWebview();
+  		}else{
+  			return $.parseParams(window.location.search);	
+  		}
+  	}
+})(VuePlus, window);
 
 /**
  * $.os 系统环境消息
@@ -334,7 +371,7 @@
 	}
 
 	detect.call($, navigator.userAgent);
-})(h5pApp, window);
+})(VuePlus, window);
 
 /**
  * extend(simple)
@@ -397,7 +434,7 @@
 
 		return target;
 	};
-})(h5pApp);
+})(VuePlus);
 
 /**
  * $.xhr 封装html5+ XMLHttpRequest
@@ -480,7 +517,6 @@
 			var setHeader = function(name, value) {
 				headers[name.toLowerCase()] = [name, value];
 			};
-
 			if(queryString && method.toUpperCase() === 'POST') {
 				setHeader('Content-Type', 'application/x-www-form-urlencoded');
 			}
@@ -555,7 +591,7 @@
 		return xhr(url, options);
 	};
 
-})(h5pApp, window);
+})(VuePlus, window);
 
 /**
  * 获取网络信息
@@ -575,7 +611,7 @@
 
 	    return types[plus.networkinfo.getCurrentType()];
 	}
-})(h5pApp);
+})(VuePlus);
 
 /**
  * 本地存储
@@ -609,8 +645,8 @@
 	        store.clear();
 	    };
 		return storage
-	}())
-})(h5pApp, window);
+	}());
+})(VuePlus, window);
 
 /**
  * DOM操作
@@ -769,4 +805,80 @@
 		return this.init(this[0].parentNode);
 	};
 
-})(h5pApp);
+})(VuePlus);
+
+/**
+ * url 操作函数
+ * @param {Object} $
+ */
+(function($){
+	
+	/**
+	 * 	转换 URL，将 data 拼入 url
+	 * @param {Object} url
+	 * @param {Object} data
+	 */
+	$.convertUrl = function(url, data) {
+		var buffer = [];
+		for (var key in data) {
+			buffer.push(key + '=' + encodeURIComponent(data[key]));
+		}
+		return url + (url.indexOf('?') > -1 ? '&' : '?') + buffer.join('&');
+	};
+	
+	/**
+	 * 对字符串进行解码
+	 * @param {Object} str
+	 */
+	$.decode = function(str) {
+		var decodeRegexp = /\+/g;
+	    return decodeURIComponent(str.replace(decodeRegexp, " "));
+	};
+	
+	/**
+	 * 解析URL字符串为URL对象
+	 */
+	$.urlParse = function(url, parseQueryString) {
+		var properties = ['hash', 'host', 'hostname', 'href', 'origin', 'pathname', 'port', 'protocol', 'search'];
+		var __a__ = document.createElement('a');
+	    __a__.href = url;
+	    var result = {};
+	    for (var i = 0, len = properties.length; i < len; i++) {
+	        var property = properties[i];
+	        result[property] = __a__[property];
+	    }
+	    if(parseQueryString && (typeof parseQueryString)){
+	        result['search'] = parseParams(result['search']);
+	    }
+	    return result;
+	};
+	
+	/**
+	 * 解析URL链接参数为对象
+	 * @param {Object} queryString
+	 */
+	$.parseParams = function(queryString) {
+		var paramRegexp = /([^&=]+)=?([^&]*)/g;
+		
+	    var params = {};
+	    queryString = queryString && (queryString.indexOf('?') === 0 ? queryString.replace('?', '') : queryString);
+	    if (queryString) {
+	        var e;
+	        while (e = paramRegexp.exec(queryString)) {
+	            params[$.decode(e[1])] = $.decode(e[2]);
+	        }
+	    }
+	    return params;
+	};
+	
+	/**
+	 * 获取URL链接参数
+	 */
+	$.getUrlParam = function(key, queryString) {
+	    var params = parseParams(queryString || location.search);
+	    if (params.hasOwnProperty(key)) {
+	        return params[key];
+	    }
+	    return '';
+	};
+})(VuePlus);

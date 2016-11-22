@@ -1,80 +1,86 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>hello h5pApp！</title>
-    <link rel="stylesheet" type="text/css" href="css/mui.css"/>
-    <link rel="stylesheet" type="text/css" href="css/app.css"/>
-</head>
-<body>
-	
-	<div id="app">
-		<header class="mui-bar mui-bar-nav">
-			<button class="mui-btn mui-btn-link">
-				<span class="name">{{city}}</span>
-				<span class="mui-icon mui-icon-arrowdown"></span>
-			</button>
-		    <h1 class="mui-title">{{title}}</h1>
-		</header>
-		<div class="mui-content mui-content-padded">
-			<h3 class="mui-subtitle">定位：</h3>
-		    {{position}}
-		    <h3 class="mui-subtitle">网络：</h3>
-		    {{networktype}}
-		    <h3 class="mui-subtitle">ajax：</h3>
-		    {{getData}}
-		    <h3 class="mui-subtitle">爬虫：</h3>
-		    <button type="button" class="mui-btn mui-btn-blue mui-btn-block" v-on:tap="parser">爬虫实例</button>
-		</div>
-	</div>
-	
-	<script src="html5plus://ready"></script>
-	<script src="js/mui.min.js"></script>
-	<script src="js/vue.js"></script>
-	<script src="js/h5pApp.js"></script>
-	<script type="text/javascript">	
-		h5pApp({
-			el: '#app',
-			data: {
-				title: 'hello h5pApp！',
-				city: '',
-				position: '',
-				networktype: '',
-				getData: ''
-			},
-			methods: {
-				parser: function () {
-					mui.openWindow('example/parser.html');
-				}
-			},
-			mounted: function () {
-				console.log('mounted:'+JSON.stringify(this.$data))
-			},
-			domReady: function () {
-				console.log('domReady:'+JSON.stringify(this.$data))
-				console.log(h5pApp('.mui-title').html());
-			},
-			plusReady: {
-				init: function () {
-					console.log('plusReady');
-					// 请求数据的实例
-					var self = this;
-					h5pApp.get('http://httpbin.org/get').then(function(response){
-						self.getData = response.body;
-					}).catch(function(error){
-						console.log(JSON.stringify(error));
-					})
-				},
-				getLocation: function (response) {
-					this.position = response.message;
-					this.city = response.message.address.city;
-				},
-				getNetworkType: function (response) {
-					this.networktype = response;
-				}
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
+		<style>
+			.mui-tab-item .mui-tab-label{
+				font-family: "PingFangSC-Regular","microsoft yahei";
+				color: #666666;
 			}
-		})
-	</script>
-</body>
+			.mui-tab-item.mui-active .mui-tab-label{
+				color: #FF4900;
+			}
+			.mui-bar-tab .mui-tab-item.mui-active{
+				color: #ff4900;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<header class="mui-bar mui-bar-nav">
+				<button class="mui-btn mui-btn-link" v-if="activeIndex==0">
+					<span class="name">{{city}}</span>
+					<span class="mui-icon mui-icon-arrowdown"></span>
+				</button>
+				<h1 class="mui-title">{{title[activeIndex]}}</h1>
+			</header>
+			
+			<nav class="mui-bar mui-bar-tab">
+				<a class="mui-tab-item" v-bind:class="{'mui-active': (index === 0)}" v-for='(item, index) in tabbar' v-on:tap='changeView(index)'>
+					<span class="mui-icon" v-bind:class="item.icon"></span>
+	        		<span class="mui-tab-label">{{item.name}}</span>
+				</a>
+			</nav>
+			<div class="mui-content"></div>	
+		</div>
+		
+		<script src="html5plus://ready"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/vue-html5plus.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script src="js/tabbar.js"></script>
+		<script type="text/javascript">
+			tabbar.init({
+				activeIndex: 0,
+				style: {
+					top: '44px',
+					bottom: '51px'
+				},
+				subpages: ['example/main-home.html', 'example/main-parser.html', 'example/main-test.html']
+			})
+			
+			VuePlus({
+				el: '#app',
+				data: {
+					city: '',
+					title: ['hello Vue-html5plus！', '爬虫实例', '测试'],
+					activeIndex: 0,
+					tabbar: [
+						{name: '首页', icon: 'mui-icon-home'},
+						{name: '爬虫', icon: 'mui-icon-navigate'}, 
+						{name: '测试', icon: 'mui-icon-gear'}
+					]
+				},
+				methods: {
+					changeView: function (index) {
+						tabbar.switchView(index, function(){
+							console.log(index);
+						});
+					}
+				},
+				plusReady: {
+					getLocation: function (response) {
+	                    this.city = response.message.address.city.replace('市', '');
+	                }
+				}
+			});
+		</script>
+	</body>
 </html>

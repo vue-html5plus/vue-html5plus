@@ -203,10 +203,16 @@
 					"js/vue-html5plus.js",
 					"js/h5pApp.js",
 					"js/mui.min.js",
-					"css/app.css"
+					"css/app.css",
+					"js/tabbar.js",
+					"css/mui.min.css",
+					"example/main-home.html"
 				],
 				"refer": [
-					"example/parser.html"
+					"example/parser.html",
+					"example/main-test.html",
+					"example/main-parser.html",
+					"example/main-browser.html"
 				],
 				"priority": 0
 			},
@@ -233,7 +239,49 @@
 					"css/app.css",
 					"css/progressbar.css",
 					"js/h5pApp.js",
+					"js/progressbar.js",
+					"js/vue-html5plus.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"example/main-home.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"example/main-parser.html": {
+				"resources": [
+					"js/htmlparser.js",
+					"js/vue.js",
+					"js/mui.min.js",
+					"css/app.css",
+					"css/mui.min.css",
+					"js/vue-html5plus.js"
+				],
+				"refer": [
+					"example/browser.html"
+				],
+				"priority": 0
+			},
+			"example/main-browser.html": {
+				"resources": [
+					"css/progressbar.css",
 					"js/progressbar.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"example/main-test.html": {
+				"resources": [
+					"js/vue.js",
+					"js/mui.min.js",
+					"css/app.css",
+					"css/mui.min.css",
+					"js/vue-html5plus.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -14,13 +14,13 @@
 		</header>
 		<div class="progressbar"><span></span></div>
 		
-		<script src="../js/h5pApp.js"></script>
+		<script src="../js/vue-html5plus.js"></script>
 		<script src="../js/progressbar.js"></script>
 		<script type="text/javascript">
-			h5pApp({
+			VuePlus({
 				browser: {// 支持字符串，函数
 					url: function() {
-						return h5pApp.currentWebview().pageUrl;
+						return vp.currentWebview().pageUrl;
 					},
 					bounce: false, // 设置回弹
 					style: { // 浏览器样式
@@ -29,7 +29,7 @@
 					},
 					title: function (title) {
 						var title = title.split(' - ')[0];
-						h5pApp('.mui-title').html(title);
+						vp('.mui-title').html(title);
 					},
 					loading: function () {
 						console.log('loading');
