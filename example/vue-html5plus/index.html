@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
+		<style>
+			.mui-tab-item .mui-tab-label{
+				font-family: "PingFangSC-Regular","microsoft yahei";
+				color: #666666;
+			}
+			.mui-tab-item.mui-active .mui-tab-label{
+				color: #FF4900;
+			}
+			.mui-bar-tab .mui-tab-item.mui-active{
+				color: #ff4900;
+			}
+		</style>
+	</head>
+<body>
+	<div id="app">
+		<header class="mui-bar mui-bar-nav">
+			<button class="mui-btn mui-btn-link" v-if="activeIndex==0">
+				<span class="name">{{city}}</span>
+				<span class="mui-icon mui-icon-arrowdown"></span>
+			</button>
+			<h1 class="mui-title">{{title[activeIndex]}}</h1>
+		</header>
+		
+		<vhp-tabbar 
+			:Index="activeIndex"
+			:styles="{top: '44px',bottom: '51px'}"
+			:subpages="['example/main-home.html', 'example/main-parser.html', 'example/main-test.html']"
+			:config="[{name: '首页', icon: 'mui-icon-home'},{name: '爬虫', icon: 'mui-icon-navigate'},{name: '测试', icon: 'mui-icon-gear'}]">
+		</vhp-tabbar>
+	</div>
+	
+	<script src="html5plus://ready"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/vue-tap.js"></script>
+	<script src="js/vue-html5plus.js"></script>
+	<script src="component/vhp-tabbar.js"></script>
+	<script type="text/javascript">	
+		var app = App({
+			el: '#app',
+			data: {
+				city: '',
+				activeIndex: 0,
+				title: ['hello Vue-html5plus!', '爬虫实例', '测试']
+			},
+			mounted: function () {
+				console.log('==========mounted:'+new Date().getMilliseconds()+'==========');
+				
+			},
+			domReady: function () {
+				console.log('==========domReady:'+new Date().getMilliseconds()+'==========');
+			},
+			plusReady: {
+				init: function () {
+					console.log('==========plusReady:'+new Date().getMilliseconds()+'==========');
+				},
+				getLocation: function (response) {
+					this.city = response.message.address.city.replace('市','');
+				},
+				getNetworkType: function (response) {
+					console.log(JSON.stringify(response));
+				}
+			},
+			back: function(){
+				console.log('exit');
+				return true; // 是否执行默认逻辑，为true时则执行，为false时只执行自定义逻辑
+			}
+		});
+	</script>
+</body>
+</html>

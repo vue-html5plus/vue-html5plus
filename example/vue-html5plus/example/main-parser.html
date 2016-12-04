@@ -8,6 +8,9 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<style type="text/css">
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 0px;
+			}
 			[v-cloak]{
     			display:none;
 			}
@@ -18,7 +21,7 @@
 		<div id="app" v-cloak>
 			<div class="mui-content">
 			    <ul class="mui-table-view">
-				    <li class="mui-table-view-cell mui-media" v-for="(item, index) in list" v-on:tap="openView(index)">
+				    <li class="mui-table-view-cell mui-media" v-for="(item, index) in list" v-tap="{methods: openView , index : index}">
 				        <a v-bind:data-href="item.href">
 				            <img class="mui-media-object mui-pull-left" v-bind:src="item.thumb">
 				            <div class="mui-media-body">
@@ -32,34 +35,32 @@
 		</div>
 
 		<script src="../js/vue.js"></script>
+		<script src="../js/vue-tap.js"></script>
 		<script src="../js/vue-html5plus.js"></script>
-		<script src="../js/mui.min.js"></script>
 		<script src="../js/htmlparser.js"></script>
 		<script type="text/javascript">
-			VuePlus({
+			App({
 				el: '#app',
 				data: {
 					list: ''
 				},
 				plusReady: function () {
 					var self = this;
-					vp.get('https://segmentfault.com/blogs').then(function(response){
+					vhp.get('https://segmentfault.com/blogs').then(function(response){
 						var list = htmlparser.segmentfault(response.body);
 						self.list = list;
 					}).catch(function(err){
 						console.log(err);
-					})
+					});	
 				},
 				methods:{
-			  		openView: function(index){
-			  			var pageUrl = this.list[index].href;
-						mui.openWindow({
-							url: 'browser.html',
-							id: 'browser',
-							extras: {
-								pageUrl: pageUrl
-							}
-						})
+			  		openView: function(params){
+			  			var pageUrl = this.list[params.index].href;
+			  			vhp.openView('browser.html',{
+			  				extras: {
+			  					pageUrl: pageUrl
+			  				}
+			  			});
 			  		}
 			  	}
 			})	

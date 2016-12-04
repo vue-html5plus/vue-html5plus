@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>hello vhp</title>
+</head>
+<body>
+
+	<div class="name">
+		hello world!
+		<div id="test">
+			vue-html5plus
+		</div>
+	</div>
+
+	<div class="name">
+		html5plus
+	</div>
+
+	<script src="../dist/vhp.js"></script>
+	<script type="text/javascript">
+		vhp('.name').first().css('color', function () {
+			return '#f00'
+		})
+
+		vhp('.name').last().css('color', '#0f0');
+
+		vhp('.name').eq(1).css('font-size', '35px');
+
+		console.log(vhp('#test').parent().attr('class'));
+
+		vhp.getJSON('http://httpbin.org/get').then(function (response) {
+			console.log(response);
+		}).catch(function (err) {
+			console.log(err);
+		})
+	</script>
+</body>
+</html>

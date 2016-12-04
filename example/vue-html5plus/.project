@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>vue-h5p</name>
+	<name>vue-html5plus</name>
 	<comment>Create By HBuilder</comment>
 	<projects>
 	</projects>
@@ -22,7 +22,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>0</id>
+			<id>1479885512740</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
@@ -37,15 +37,6 @@
 						<arguments>1.0-projectRelativePath-matches-false-false-setting</arguments>
 					</matcher>
 				</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>0</id>
-			<name></name>
-			<type>26</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-node_modules</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

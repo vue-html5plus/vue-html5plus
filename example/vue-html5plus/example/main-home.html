@@ -4,15 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title></title>
-    <link rel="stylesheet" type="text/css" href="../css/mui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
 </head>
 <body>
 	
 	<div id="app">
 		<div class="mui-content mui-content-padded">
-			<h3 class="mui-subtitle">定位：</h3>
-		    {{position}}
 		    <h3 class="mui-subtitle">网络：</h3>
 		    {{networktype}}
 		    <h3 class="mui-subtitle">ajax：</h3>
@@ -22,34 +20,22 @@
 	
 	<script src="../js/vue.js"></script>
 	<script src="../js/vue-html5plus.js"></script>
-	<script src="../js/mui.min.js"></script>
 	<script type="text/javascript">	
-		VuePlus({
+		App({
 			el: '#app',
 			data: {
 				position: '',
 				networktype: '',
 				getData: ''
 			},
-			mounted: function () {
-				console.log('mounted:'+JSON.stringify(this.$data))
-			},
-			domReady: function () {
-				console.log('domReady:'+JSON.stringify(this.$data))
-			},
 			plusReady: {
-				init: function () {
-					console.log('plusReady');
+				init: function(){
 					var self = this;
-					vp.get('http://httpbin.org/get').then(function(response){
+					vhp.get('http://httpbin.org/get').then(function(response){
 						self.getData = response.body;
 					}).catch(function(error){
 						console.log(JSON.stringify(error));
 					})
-				},
-				getLocation: function (response) {
-					this.position = response.message;
-					this.city = response.message.address.city;
 				},
 				getNetworkType: function (response) {
 					this.networktype = response;

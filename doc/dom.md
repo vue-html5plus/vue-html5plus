@@ -1,162 +1,193 @@
+# vhp.js
+
+vhp（谐音we happy!），内置于vue-html5plus骨架中，通过vhp(selector)获取dom对象，从而对dom进行操作，说白了就是一个极简的DOM操作库，像jquery一样提供链式调用的方法。
+
 ### 选择器
 
-> **vp选择器是基于document.querySelectorAll()封装的选择器，selectors 是一个由逗号连接的包含一个或多个CSS选择器的字符串。**
+> **vhp选择器是基于document.querySelectorAll()封装的选择器，selectors 是一个由逗号连接的包含一个或多个CSS选择器的字符串。**
 
 如：
 
 ```
-vp('.divBox') // 获取类名为.divBox的对象
-vp('.divBox')[0] // vp对象转dom对象
-vp('.divBox span') // 获取类名为.divBox下span标签的对象
-vp('span',vp('.divBox')[0]) // 获取类名为.divBox下span标签的对象
+vhp('.divBox') // 获取类名为.divBox的对象
+vhp('.divBox').$el // vhp对象转dom对象
+vhp('.divBox span') // 获取类名为.divBox下span标签的对象
+vhp('span',vhp('.divBox').$el) // 获取类名为.divBox下span标签的对象
 ```
 
 ### 获取设置内容和属性
 
-> **vp(selector).html() 获取元素html结构**
+> **vhp(selector).html(DOMString) 获取设置元素html结构**
 
-例如：获取.divBox下的html
 ```
-vp('.divBox').html();
-```
-
-> **vp(selector).html(DOMString) 设置元素html结构**
-
-例如：设置.divBox下的html
-```
-vp('.divBox').html('<p>我是新内容</p>');
+vhp('.divBox').html();
+vhp('.divBox').html('<p>我是新内容</p>');
 ```
 
-> **vp(selector).text() 获取文本元素内容**
+> **vhp(selector).text(DOMString) 获取设置文本元素内容**
 
-例如：获取.divBox下的span的文本内容
 ```
-vp('.divBox span').text();
-```
-
-> **vp(selector).text(DOMString) 设置文本元素内容**
-
-例如：设置.divBox下的span的文本内容
-```
-vp('.divBox span').text('我是新内容');
+vhp('.divBox span').text();
+vhp('.divBox span').text('我是新内容');
 ```
 
-> **vp(selector).attr(AttributeName) 获取属性值**
+> **vhp(selector).empty() 清空节点子元素**
 
-例如：获取.divBox的name属性
 ```
-vp('.divBox').attr('name')
+vhp('.divBox').empty();
 ```
 
-> **vp(selector).attr(AttributeName, AttributeValue) 设置属性值**
+> **vhp(selector).val(value) 获取设置元素value**
 
-例如：设置.divBox的name属性
 ```
-vp('.divBox').attr('name','divBox1');
+vhp('.divBox').val();
+vhp('.divBox').val('hello');
+```
+
+> **vhp(selector).attr(AttributeName) 获取属性值**
+
+```
+vhp('.divBox').attr('name')
+```
+
+> **vhp(selector).attr(AttributeName, AttributeValue) 设置属性值**
+
+```
+vhp('.divBox').attr('name','divBox1');
 ```
 
 ### 过滤查找
 
-> **vp(selector).find(selector) 获取当前子节点下的某个子节点**
+> **vhp(selector).find(selector) 获取当前子节点下的某个子节点**
 
 ```
-console.log(vp('.divBox').find('.span2').html())
-
-```
-> **vp(selector).first() 获取第一个子节点**
-
-```
-console.log(vp('.divBox span').first().html())
+console.log(vhp('.divBox').find('.span2').html())
 ```
 
-> **vp(selector).last() 获取最后一个子节点对象**
+> **vhp(selector).first() 获取第一个子节点**
 
 ```
-console.log(vp('.divBox span').last().html())
+console.log(vhp('.divBox span').first().html())
 ```
 
-> **vp(selector).eq(index) 获取第index个子节点对象**
+> **vhp(selector).last() 获取最后一个子节点对象**
 
 ```
-console.log(vp('.divBox span').eq(1).html())
+console.log(vhp('.divBox span').last().html())
 ```
 
-> **vp(selector).parent() 获取父节点对象**
+> **vhp(selector).eq(index) 获取第index个子节点对象**
 
 ```
-console.log(vp('.divBox span').eq(1).parent().html())
+console.log(vhp('.divBox span').eq(1).html())
 ```
 
-### HTML添加及删除元素
-
-> **vp(selector).prepend(DOMString) 在当前dom节点下的第一个子节点前追加**
+> **vhp(selector).parent() 获取父节点对象**
 
 ```
-vp('.divBox').prepend('<ul><li>prepend</li></ul>')
+console.log(vhp('.divBox span').eq(1).parent().html())
 ```
 
-> **vp(selector).append(DOMString) 在当前dom节点下的最后一个子节点后追加**
+> **vhp(selector).prev() 获取前一个节点对象**
 
 ```
-vp('.divBox').append('<ul><li>append</li></ul>')
+console.log(vhp('.divBox span').prev().html())
 ```
 
-> **vp(selector).before(DOMString) 在当前dom节点前追加**
+> **vhp(selector).next() 获取后一个节点对象**
 
 ```
-vp('.divBox').before('<ul><li>before</li></ul>')
+console.log(vhp('.divBox span').next().html())
 ```
 
-> **vp(selector).after(DOMString) 在当前dom节点后追加**
+### 控制HTML元素
+
+> **vhp(selector).prepend(DOMString) 在当前dom节点下的第一个子节点前追加**
 
 ```
-vp('.divBox').after('<ul><li>after</li></ul>')
+vhp('.divBox').prepend('<ul><li>prepend</li></ul>')
+```
+
+> **vhp(selector).append(DOMString) 在当前dom节点下的最后一个子节点后追加**
+
+```
+vhp('.divBox').append('<ul><li>append</li></ul>')
+```
+
+> **vhp(selector).before(DOMString) 在当前dom节点前追加**
+
+```
+vhp('.divBox').before('<ul><li>before</li></ul>')
+```
+
+> **vhp(selector).after(DOMString) 在当前dom节点后追加**
+
+```
+vhp('.divBox').after('<ul><li>after</li></ul>')
+```
+
+> **vhp(selector).remove() 删除当前dom节点**
+
+```
+vhp('.divBox').remove()
+```
+
+> **vhp(selector).show() 显示当前dom节点**
+
+```
+vhp('.divBox').show()
+```
+
+> **vhp(selector).hide() 隐藏当前dom节点**
+
+```
+vhp('.divBox').hide()
 ```
 
 ### HTML css类
 
-> **vp(selector).hasClass(className) 判断类名是否存在**
+> **vhp(selector).hasClass(className) 判断类名是否存在**
 
 ```
-console.log(vp(".divBox").hasClass('divBox'))
+console.log(vhp(".divBox").hasClass('divBox'))
 ```
 
-> **vp(selector).addClass(className) 添加类名**
+> **vhp(selector).addClass(className) 添加类名**
 
 ```
-vp(".divBox").addClass('red')
+vhp(".divBox").addClass('red')
 ```
 
-> **vp(selector).removeClass(className) 移除类名**
+> **vhp(selector).removeClass(className) 移除类名**
 
 ```
-vp(".divBox").removeClass('red')
+vhp(".divBox").removeClass('red')
 ```
 
-> **vp(selector).toggleClass(className) 切换类名**
+> **vhp(selector).toggleClass(className) 切换类名**
 
 ```
-vp(".divBox").toggleClass('red')
+vhp(".divBox").toggleClass('red')
 ```
 
 ### HTML css方法
 
-> **vp(selector).css(AttributeName) 获取样式属性值**
+> **vhp(selector).css(AttributeName) 获取样式属性值**
 
 ```
-console.log(vp(".divBox").css("color"));
+console.log(vhp(".divBox").css("color"));
 ```
 
-> **vp(selector).css(AttributeName，AttributeValue) 设置样式属性值**
+> **vhp(selector).css(AttributeName，AttributeValue) 设置样式属性值**
 
 ```		
-vp(".divBox").css("color","red");
+vhp(".divBox").css("color","red");
 ```
 
-> **vp(selector).css(JSON) 批量设置样式属性值**
+> **vhp(selector).css(JSON) 批量设置样式属性值**
 
 ```
-vp(".divBox").css({
+vhp(".divBox").css({
   "width":"200px",
   "color":"white",
   "background-color":"#98bf21",
@@ -166,10 +197,10 @@ vp(".divBox").css({
 });
 ```
 
-> **vp(selector).css(AttributeName, Function) 通过函数设置样式属性值**
+> **vhp(selector).css(AttributeName, Function) 通过函数设置样式属性值**
 
 ```
-vp('.divBox').css(
+vhp('.divBox').css(
   'background-color',function(){
     return '#F00'
   }

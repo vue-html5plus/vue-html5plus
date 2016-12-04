@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/progressbar.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/vhp-progressbar.css"/>
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
@@ -15,12 +15,12 @@
 		<div class="progressbar"><span></span></div>
 		
 		<script src="../js/vue-html5plus.js"></script>
-		<script src="../js/progressbar.js"></script>
+		<script src="../component/vhp-progressbar.js"></script>
 		<script type="text/javascript">
-			VuePlus({
+			App({
 				browser: {// 支持字符串，函数
 					url: function() {
-						return vp.currentWebview().pageUrl;
+						return vhp.currentWebview().pageUrl;
 					},
 					bounce: false, // 设置回弹
 					style: { // 浏览器样式
@@ -29,7 +29,7 @@
 					},
 					title: function (title) {
 						var title = title.split(' - ')[0];
-						vp('.mui-title').html(title);
+						vhp('.mui-title').html(title);
 					},
 					loading: function () {
 						console.log('loading');
@@ -39,11 +39,11 @@
 						console.log('loaded');
 						progressbar.loaded();
 					},
+					close: function () {
+						console.log('close');
+					},
 					back: function () {
 						console.log('back');
-					},
-					close: function () {
-						console.log('browser close');
 					}
 				}
 			})	
