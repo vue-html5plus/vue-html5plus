@@ -9,6 +9,10 @@ import {os} from './os';
 import {storage} from './storage';
 import {get, post, getJSON} from './xhr';
 
+//伪全局变量
+import {GlobalVar} from './globalvar';
+
+
 
 const codeRE = /<(.+?)>/g;
 const idSelectorRE = /^#([\w-]+)$/;
@@ -271,6 +275,11 @@ vhp.post = post;
 vhp.getJSON = getJSON;
 
 vhp.getCurrentNetworkType = network.getCurrentNetworkType;
+
+//伪全局变量
+vhp.global = function(_name, _val){
+	return new GlobalVar(_name, _val);
+}
 
 if (typeof window !== 'undefined') {
   window.vhp = vhp;

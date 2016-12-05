@@ -35,6 +35,16 @@
 		}).catch(function (err) {
 			console.log(err);
 		})
+
+		//获取一个持久变量 nsin 是标识 可自定义 空则创建 
+		var nsin = vhp.global('nsin')
+		nsin.value = new Date().getTime()
+		
+		var nsin2 = vhp.global('nsin')
+		console.log(nsin2.value)
+
+		//清除这个标识的值
+		//vhp.global('nsin').clear();
 	</script>
 </body>
 </html>
