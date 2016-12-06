@@ -65,9 +65,6 @@
 				},
 				getLocation: function (response) {
 					this.city = response.message.address.city.replace('市','');
-				},
-				getNetworkType: function (response) {
-					console.log(JSON.stringify(response));
 				}
 			},
 			back: function(){
@@ -75,6 +72,8 @@
 				return true; // 是否执行默认逻辑，为true时则执行，为false时只执行自定义逻辑
 			}
 		});
+		
+		
 	</script>
 </body>
 </html>

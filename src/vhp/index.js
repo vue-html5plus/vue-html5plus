@@ -5,12 +5,14 @@ import * as geolocation from './geolocation';
 import * as url from './url';
 import * as webview from './webview';
 
-import {os} from './os';
-import {storage} from './storage';
-import {get, post, getJSON} from './xhr';
+import { os } from './os';
+import { storage } from './storage';
+import { get, post, getJSON } from './xhr';
 
 //伪全局变量
-import {GlobalVar} from './globalvar';
+import { GlobalVar } from './globalvar';
+//第三方登录
+import {getOAuth} from './oauth';
 
 
 
@@ -31,11 +33,11 @@ var qsa = function (selector, context) {
 }
 
 class vQuery {
-	constructor (selector, context) {
+	constructor(selector, context) {
 		context = context || document;
 		if (!selector) return this;
-		if(typeof selector === 'string'){
-			if(codeRE.test(selector)){
+		if (typeof selector === 'string') {
+			if (codeRE.test(selector)) {
 				let match = codeRE.exec(selector);
 				this._els = [document.createElement(match[1])];
 			}
@@ -45,9 +47,9 @@ class vQuery {
 			}
 			this._els = qsa(selector, context);
 		} else if (typeof selector === 'object') {
-			if(utils.isArrayLike(selector)){
+			if (utils.isArrayLike(selector)) {
 				this._els = [].slice.call(selector);
-			}else{
+			} else {
 				this._els = [selector];
 			}
 		}
@@ -55,20 +57,20 @@ class vQuery {
 		return this;
 	}
 
-	empty () {
-		for(var Key in this._els){
-			if(this._els.hasOwnProperty(Key)){
+	empty() {
+		for (var Key in this._els) {
+			if (this._els.hasOwnProperty(Key)) {
 				this._els[Key].innerHTML = '';
 			}
 		}
-    return this
-  }
+		return this
+	}
 
-	html (value) {
-		if(typeof value !== 'undefined'){
-			for(var Key in this._els){
-				if(this._els.hasOwnProperty(Key)){
-		      this._els[Key].innerHTML = value;
+	html(value) {
+		if (typeof value !== 'undefined') {
+			for (var Key in this._els) {
+				if (this._els.hasOwnProperty(Key)) {
+					this._els[Key].innerHTML = value;
 				}
 			}
 			return this;
@@ -76,38 +78,38 @@ class vQuery {
 		return this.$el.innerHTML;
 	}
 
-	text (value) {
-    if(typeof value !== 'undefined'){
-			for(var Key in this._els){
-				if(this._els.hasOwnProperty(Key)){
-		      this._els[Key].textContent = value;
+	text(value) {
+		if (typeof value !== 'undefined') {
+			for (var Key in this._els) {
+				if (this._els.hasOwnProperty(Key)) {
+					this._els[Key].textContent = value;
 				}
 			}
 			return this;
-    }
+		}
 		return this.$el.textContent;
-  }
+	}
 
-	val (value) {
-		if(typeof value !== 'undefined'){
+	val(value) {
+		if (typeof value !== 'undefined') {
 			this.$el.value = value;
 			return this;
 		}
 		return this.value;
 	}
 
-	attr (key, value) {
-		for(var Key in this._els){
+	attr(key, value) {
+		for (var Key in this._els) {
 			let item = this._els[Key];
-			if(typeof value !== 'undefined'){
+			if (typeof value !== 'undefined') {
 				item.setAttribute(key, value);
 			} else {
-				if(typeof key === 'string'){
+				if (typeof key === 'string') {
 					return item.getAttribute(key);
 				}
-				if(typeof key === 'object'){
-					for(var attr in key){
-					  item.setAttribute(attr, key[attr]);
+				if (typeof key === 'object') {
+					for (var attr in key) {
+						item.setAttribute(attr, key[attr]);
 					}
 				}
 			}
@@ -115,95 +117,95 @@ class vQuery {
 		return this;
 	}
 
-	prepend (domstring) {
-		for(var Key in this._els){
+	prepend(domstring) {
+		for (var Key in this._els) {
 			this._els[Key].insertAdjacentHTML('afterbegin', domstring);
 		}
 		return this;
 	}
 
-	append (domstring) {
-		for(var Key in this._els){
+	append(domstring) {
+		for (var Key in this._els) {
 			this._els[Key].insertAdjacentHTML('beforeend', domstring);
 		}
 		return this;
 	}
 
-	before (domstring) {
-		for(var Key in this._els){
+	before(domstring) {
+		for (var Key in this._els) {
 			this._els[Key].insertAdjacentHTML('beforebegin', domstring);
 		}
 		return this;
 	}
 
-	after (domstring) {
-		for(var Key in this._els){
+	after(domstring) {
+		for (var Key in this._els) {
 			this._els[Key].insertAdjacentHTML('afterend', domstring);
 		}
 		return this;
 	}
 
-	remove () {
-		for(var Key in this._els){
+	remove() {
+		for (var Key in this._els) {
 			var item = this._els[Key];
 			item.parentNode.removeChild(item);
 		}
 		return this;
 	}
 
-	hasClass (name) {
+	hasClass(name) {
 		return this.$el.classList.contains(name);
 	}
 
-	addClass (names) {
-		for(var Key in this._els){
+	addClass(names) {
+		for (var Key in this._els) {
 			let item = this._els[Key];
-	    names.split(' ').forEach(function(name){
-				if(!this.hasClass(name)){
+			names.split(' ').forEach(function (name) {
+				if (!this.hasClass(name)) {
 					item.classList.add(name);
 				}
-	    });
+			});
 		}
 		return this;
 	}
 
-	removeClass (names) {
-		for(var Key in this._els){
+	removeClass(names) {
+		for (var Key in this._els) {
 			let item = this._els[Key];
-			names.split(' ').forEach(function(name){
-				if(this.hasClass(name)){
+			names.split(' ').forEach(function (name) {
+				if (this.hasClass(name)) {
 					item.classList.remove(name);
 				}
-	    });
+			});
 		}
 		return this;
 	}
 
-	toggleClass (names) {
-		for(var Key in this._els){
+	toggleClass(names) {
+		for (var Key in this._els) {
 			let item = this._els[Key];
-			names.split(' ').forEach(function(name){
+			names.split(' ').forEach(function (name) {
 				item.classList.toggle(name);
-	    });
+			});
 		}
 		return this;
 	}
 
-	css (key, value) {
-		for(var Key in this._els){
+	css(key, value) {
+		for (var Key in this._els) {
 			let item = this._els[Key];
-			if(typeof value !== 'undefined'){
-				if(typeof value === 'function'){
+			if (typeof value !== 'undefined') {
+				if (typeof value === 'function') {
 					item.style[key] = value();
 				} else {
 					item.style[key] = value;
 				}
-      }else{
-				if(typeof key === 'string'){
-					return getComputedStyle(item,null)[key];
+			} else {
+				if (typeof key === 'string') {
+					return getComputedStyle(item, null)[key];
 				}
-				if(typeof key === 'object'){
-					for(var attr in key){
+				if (typeof key === 'object') {
+					for (var attr in key) {
 						item.style[attr] = key[attr];
 					}
 				}
@@ -212,47 +214,47 @@ class vQuery {
 		return this;
 	}
 
-	show(){
-    this.css('display', 'block')
-    return this
-  }
-
-	hide(){
-    this.css('display', 'none')
-    return this
-  }
-
-	find (selector) {
-		return new vQuery(selector,this.$el);
+	show() {
+		this.css('display', 'block')
+		return this
 	}
 
-	first () {
+	hide() {
+		this.css('display', 'none')
+		return this
+	}
+
+	find(selector) {
+		return new vQuery(selector, this.$el);
+	}
+
+	first() {
 		return new vQuery(this.$el);
 	}
 
-	last () {
+	last() {
 		return new vQuery(this._els[this._els.length - 1]);
 	}
 
-	next(){
-    return new vQuery(this.$el.nextElementSibling)
-  }
+	next() {
+		return new vQuery(this.$el.nextElementSibling)
+	}
 
-  prev(){
-    return new vQuery(this.$el.previousElementSibling)
-  }
+	prev() {
+		return new vQuery(this.$el.previousElementSibling)
+	}
 
-	eq (index) {
+	eq(index) {
 		return new vQuery(this._els[index]);
 	}
 
-	parent () {
+	parent() {
 		return new vQuery(this.$el.parentNode);
 	}
 
 }
 
-function vhp (selector, context) {
+function vhp(selector, context) {
 	return new vQuery(selector, context);
 }
 
@@ -275,14 +277,17 @@ vhp.post = post;
 vhp.getJSON = getJSON;
 
 vhp.getCurrentNetworkType = network.getCurrentNetworkType;
+vhp.listenNetWork = network.listenNetWork;
 
 //伪全局变量
-vhp.global = function(_name, _val){
+vhp.global = function (_name, _val) {
 	return new GlobalVar(_name, _val);
 }
+//第三方登录
+vhp.getOAuth = getOAuth;
 
 if (typeof window !== 'undefined') {
-  window.vhp = vhp;
+	window.vhp = vhp;
 }
 
 export default vhp;

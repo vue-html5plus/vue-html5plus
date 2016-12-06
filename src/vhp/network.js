@@ -12,4 +12,10 @@ var getCurrentNetworkType = function () {
 	return NetworkType[plus.networkinfo.getCurrentType()];
 }
 
-export {getCurrentNetworkType};
+var listenNetWork = function(onNetChange, context){
+    document.addEventListener( "netchange", function(){
+        return onNetChange.call(context, getCurrentNetworkType());
+    }, false );  
+}
+
+export {getCurrentNetworkType, listenNetWork};

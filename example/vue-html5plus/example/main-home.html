@@ -11,10 +11,12 @@
 	
 	<div id="app">
 		<div class="mui-content mui-content-padded">
-		    <h3 class="mui-subtitle">网络：</h3>
+		    <h3 class="mui-subtitle mui-h3">网络监控：</h3>
 		    {{networktype}}
-		    <h3 class="mui-subtitle">ajax：</h3>
+		    <h3 class="mui-subtitle mui-h3">ajax：</h3>
 		    {{getData}}
+		    <h3 class="mui-subtitle mui-h3">第三方授权：</h3>
+		    {{oauth}}
 		</div>
 	</div>
 	
@@ -26,9 +28,13 @@
 			data: {
 				position: '',
 				networktype: '',
-				getData: ''
+				getData: '',
+				oauth: ''
 			},
 			plusReady: {
+				/**
+				 * plusReady 后执行
+				 */
 				init: function(){
 					var self = this;
 					vhp.get('http://httpbin.org/get').then(function(response){
@@ -37,8 +43,31 @@
 						console.log(JSON.stringify(error));
 					})
 				},
-				getNetworkType: function (response) {
-					this.networktype = response;
+				/**
+				 * 获取当前网络状态
+				 * @param {String} netType 网络状态
+				 */
+				getNetworkType: function (netType) {
+					this.networktype = netType;
+				},
+				/**
+				 * 开启监听网络状态 
+				 * @param {String} netType 网络状态
+				 */
+				listenNetWork: function(netType){
+					this.networktype = netType;
+				},
+				/**
+				 * 获取第三方登录信息
+				 */
+				getOAuth: {
+					// qq weixin sinaweibo
+					qq : function(err, data){
+						if(err){
+							data = err;
+						}
+						this.oauth = JSON.stringify(data);
+					}
 				}
 			}
 		})
