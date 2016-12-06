@@ -101,7 +101,7 @@
         },
         "NativeObj":{
         	"description": "原生对象"
-        }
+        },"OAuth":{}
     },
     "plus": {
         "splashscreen": {
@@ -111,7 +111,7 @@
         "popGesture": "close",/*设置应用默认侧滑返回关闭Webview窗口，"none"为无侧滑返回功能，"hide"为侧滑隐藏Webview窗口。参考http://ask.dcloud.net.cn/article/102*/
         "runmode": "normal",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
         "signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-        "distribute": {
+        "distribute": {"plugins":{"oauth":{"qq":{"appid":"1"},"sina":{"appkey":"1","appsecret":"1","redirect_uri":"1"},"weixin":{"appid":"1","appsecret":"1"}}},
             "apple": {
                 "appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
                 "mobileprovision": "",/*iOS应用打包配置文件*/
