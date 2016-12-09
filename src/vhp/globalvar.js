@@ -120,5 +120,8 @@ function deserialize(op) {
     return cs[op.type](op.value);
 }
 
+let global = function (...arg) {
+	return new GlobalVar(...arg);
+}
 
-export {GlobalVar}
+export {global}

@@ -10,9 +10,11 @@ import { storage } from './storage';
 import { get, post, getJSON } from './xhr';
 
 //伪全局变量
-import { GlobalVar } from './globalvar';
+import { global } from './globalvar';
 //第三方登录
 import {getOAuth} from './oauth';
+//第三方分享
+import {sendShare} from './share';
 
 
 
@@ -280,11 +282,11 @@ vhp.getCurrentNetworkType = network.getCurrentNetworkType;
 vhp.listenNetWork = network.listenNetWork;
 
 //伪全局变量
-vhp.global = function (_name, _val) {
-	return new GlobalVar(_name, _val);
-}
+vhp.global = global;
 //第三方登录
 vhp.getOAuth = getOAuth;
+//第三方分享
+vhp.sendShare = sendShare;
 
 if (typeof window !== 'undefined') {
 	window.vhp = vhp;

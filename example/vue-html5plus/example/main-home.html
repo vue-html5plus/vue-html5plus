@@ -17,6 +17,10 @@
 		    {{getData}}
 		    <h3 class="mui-subtitle mui-h3">第三方授权：</h3>
 		    {{oauth}}
+			<h3 class="mui-subtitle mui-h3">第三方分享：</h3>
+		    <button type="button" class="mui-btn mui-btn-blue mui-block" @click='share'>点我分享</button>
+		    {{shareText}}
+			
 		</div>
 	</div>
 	
@@ -29,7 +33,25 @@
 				position: '',
 				networktype: '',
 				getData: '',
-				oauth: ''
+				oauth: '',
+				shareText:''
+			},
+			methods: {
+				share: function(type){
+					var self = this;
+					//qq wxhy wxpyq sinaweibo
+					vhp.sendShare('qq',function(err, data){
+						if(err){
+							data = err
+						}
+						self.shareText = JSON.stringify(data)
+					},{
+						img: '_www/img/vhp.png',//图片地址
+						href: 'https://github.com/zhaomenghuan/vue-html5plus',//分享的超链接
+						title: '分享标题',//当且仅当href存在时有效
+						content: '分享内容'//当且仅当href存在时有效
+					})
+				}
 			},
 			plusReady: {
 				/**
