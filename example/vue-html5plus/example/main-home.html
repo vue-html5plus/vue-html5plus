@@ -20,6 +20,9 @@
 			<h3 class="mui-subtitle mui-h3">第三方分享：</h3>
 		    <button type="button" class="mui-btn mui-btn-blue mui-block" @click='share'>点我分享</button>
 		    {{shareText}}
+		    <h3 class="mui-subtitle mui-h3">图片选择：</h3>
+		    <button type="button" class="mui-btn mui-btn-blue mui-block" @click='gallery'>选择</button>
+		    {{imgs}}
 			
 		</div>
 	</div>
@@ -34,7 +37,8 @@
 				networktype: '',
 				getData: '',
 				oauth: '',
-				shareText:''
+				shareText:'',
+				imgs:'',
 			},
 			methods: {
 				share: function(type){
@@ -51,6 +55,12 @@
 						title: '分享标题',//当且仅当href存在时有效
 						content: '分享内容'//当且仅当href存在时有效
 					})
+				},
+				gallery: function(){
+					var self = this;
+					vhp.getGallery(function(err,imgs){
+						self.imgs = JSON.stringify(imgs);
+					},5);//一次最多选择5张 相机模式无效
 				}
 			},
 			plusReady: {

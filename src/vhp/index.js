@@ -15,6 +15,8 @@ import { global } from './globalvar';
 import {getOAuth} from './oauth';
 //第三方分享
 import {sendShare} from './share';
+//获取图片
+import {getGallery} from './gallery';
 
 
 
@@ -287,6 +289,8 @@ vhp.global = global;
 vhp.getOAuth = getOAuth;
 //第三方分享
 vhp.sendShare = sendShare;
+//图片选择
+vhp.getGallery = getGallery;
 
 if (typeof window !== 'undefined') {
 	window.vhp = vhp;
