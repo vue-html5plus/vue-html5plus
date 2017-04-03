@@ -1,53 +1,50 @@
-import * as utils from './utils';
-import {_domReady} from './domReady'
-import {_plusReady} from './plusReady'
-import {_browser} from './browser'
-import vhp from './vhp'
+import {os} from './vhp/os';
+import {plusReady} from './vhp/plusReady'
 
-class VueHTML5plus {
-	constructor (options) {
-		if(typeof options === "object"){
-			// Vue实例
-			if(window.Vue && options.el){
-				this.vm = new Vue({
-					mixins: [options]
-				});
-				if(options.domReady){
-					_domReady.call(this, options.domReady, this.vm)
-				}
-				if(options.plusReady){
-					_plusReady.call(this, options.plusReady, this.vm);
-				}
-			} else {
-				if(options.domReady){
-					_domReady.call(this, options.domReady, this);
-				}
-				if(options.plusReady){
-					_plusReady.call(this, options.plusReady, this);
-				}
-			}
-			// 内置浏览器
-			if(options.browser){
-			  _browser.call(this, options.browser);
-			}
-			// 回退逻辑
-			if(options.back){
-				vhp.back.call(this, options.back);
-			}else{
-				vhp.back();
-			}
+import * as accelerometer from './vhp/accelerometer';
+import * as geolocation from './vhp/geolocation';
+import * as network from './vhp/network';
 
-			return this;
-		}
-	}
+
+const VueHtml5Plus = (Vue) => {
+    Vue.os = os;
+    Vue.plusReady = plusReady;
+
+    Vue.mixin({
+        created: function () {
+            if (Vue.os.plus) {
+                let context = this;
+                let _options = context.$options;
+                if (typeof _options.plusReady === 'function') {
+                    Vue.plusReady(function () {
+                        _options.plusReady.call(context);
+                    });
+                }
+            }
+        }
+    });
+
+    Object.defineProperties(Vue.prototype, {
+        $accelerometer: {
+            get() {
+                return accelerometer
+            }
+        },
+        $geolocation: {
+            get() {
+                return geolocation
+            }
+        },
+        $network: {
+            get() {
+                return network
+            }
+        }
+    });
+};
+
+if (typeof window !== 'undefined' && window.Vue) {
+    window.Vue.use(VueHtml5Plus);
 }
 
-function  App (options) {
-	return new VueHTML5plus(options);
-}
-
-if (typeof window !== 'undefined') {
-  window.App = App;
-}
-
-export default App
+export default VueHtml5Plus;

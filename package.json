@@ -1,19 +1,19 @@
 {
   "name": "vue-html5plus",
-  "version": "0.0.5",
-  "description": "一个基于html5plus标准和vue.js的App骨架插件！",
+  "version": "0.1.0",
+  "description": "一个基于html5plus标准的vuejs原生拓展插件！",
   "main": "dist/vue-html5plus.js",
   "scripts": {
-    "start": "webpack --colors --watch",
-    "appdev": "webpack-dev-server --progress --colors --display-error-details",
-    "lint": "eslint src dist"
+    "start": "webpack",
+    "dev": "webpack-dev-server --inline --hot"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zhaomenghuan/vue-html5plus.git"
   },
   "keywords": [
-    "venir"
+    "vue",
+    "html5plus"
   ],
   "author": "zhaomenghuan",
   "license": "MIT",
@@ -22,13 +22,10 @@
   },
   "homepage": "https://github.com/zhaomenghuan/vue-html5plus#readme",
   "devDependencies": {
-    "babel-core": "^6.18.2",
-    "babel-eslint": "^7.1.0",
-    "babel-loader": "^6.2.7",
-    "babel-preset-es2015": "^6.18.0",
-    "es6-promise": "^4.0.5",
-    "eslint": "^3.10.1",
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "webpack": "^2.3.2",
+    "webpack-dev-server": "^2.4.2"
   }
 }

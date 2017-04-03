@@ -1,4 +1,4 @@
-var os = {
+let os = {
     plus: false,
     stream: false,
     wechat: false,
@@ -8,46 +8,46 @@ var os = {
     version: ''
 };
 
-var ua = navigator.userAgent;
+let ua = navigator.userAgent;
 // plus
-var plus = ua.match(/Html5Plus/i);
+let plus = ua.match(/Html5Plus/i);
 // stream
-var stream = ua.match(/Html5Plus/i);
+let stream = ua.match(/StreamApp/i);
 // wechat
-var wechat = ua.match(/(MicroMessenger)\/([\d\.]+)/i);
+let wechat = ua.match(/(MicroMessenger)\/([\d\.]+)/i);
 // android
-var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
+let android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
 // iphone
-var iphone = ua.match(/(iPhone\sOS)\s([\d_]+)/);
+let iphone = ua.match(/(iPhone\sOS)\s([\d_]+)/);
 // ipad
-var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+let ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
 
-if(plus){
-  os.plus = true;
+if (plus) {
+    os.plus = true;
 }
 
-if(stream){
-  os.stream = true;
+if (stream) {
+    os.stream = true;
 }
 
-if(wechat){
-  os.wechat = true;
+if (wechat) {
+    os.wechat = true;
 }
 
 if (android) {
-  os.android = true;
-  os.version = android[2];
-  os.isBadAndroid = !(/Chrome\/\d/.test(window.navigator.appVersion));
+    os.android = true;
+    os.version = android[2];
+    os.isBadAndroid = !(/Chrome\/\d/.test(window.navigator.appVersion));
 }
 
 if (iphone) {
-  os.ios = os.iphone = true;
-  os.version = iphone[2].replace(/_/g, '.');
+    os.ios = os.iphone = true;
+    os.version = iphone[2].replace(/_/g, '.');
 }
 
 if (ipad) {
-  os.ios = os.ipad = true;
-  os.version = ipad[2].replace(/_/g, '.');
+    os.ios = os.ipad = true;
+    os.version = ipad[2].replace(/_/g, '.');
 }
 
 export {os};
