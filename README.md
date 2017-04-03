@@ -33,44 +33,45 @@ Vue.use(VueHtml5Plus);
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <title></title>
     <link href="css/mui.min.css" rel="stylesheet"/>
 </head>
 <body>
-	<div id="app">
-		<header class="mui-bar mui-bar-nav">
-		    <h1 class="mui-title">{{title}}</h1>
-		</header>
-		<div class="mui-content mui-content-padded">
-			<p>定位城市：{{city}}</p>
-			<p>网络信息：{{networkType}}</p>
-		</div>
-	</div>
-	
-	<script src="js/vue.js"></script>
-	<script src="js/vue-html5plus.js"></script>
-	<script type="text/javascript" charset="utf-8">     	
-      	var app = new Vue({
-      		el: '#app',
-      		data: {
-      			title: 'hello vue-html5plus!',
-      			city: '',
-      			networkType: ''
-      		},
-		  	mounted: function () {
-		  		console.log(JSON.stringify(Vue.os))
-		  	},
-		  	plusReady: function(){
-      			var self = this;
-      			// 获取定位信息
-      			this.$geolocation.getCurrentPosition().then(function(position){
-      				self.city = position.address.city;
-      			});
-      			// 获取网络信息
-      			self.networkType = this.$network.getCurrentNetworkType();
-			}
-		})
+    <div id="app">
+        <header class="mui-bar mui-bar-nav">
+            <h1 class="mui-title">{{title}}</h1>
+        </header>
+        <div class="mui-content mui-content-padded">
+            <p>定位城市：{{city}}</p>
+            <p>网络信息：{{networkType}}</p>
+        </div>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script src="js/vue-html5plus.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        new Vue({
+            el: '#app',
+            data: {
+                title: 'hello vue-html5plus!',
+                city: '',
+                networkType: ''
+            },
+            mounted: function () {
+                console.log(JSON.stringify(Vue.os))
+            },
+            plusReady: function () {
+                var self = this;
+                // 获取定位信息
+                this.$geolocation.getCurrentPosition().then(function (position) {
+                    self.city = position.address.city;
+                });
+                // 获取网络信息
+                self.networkType = this.$network.getCurrentNetworkType();
+            }
+        })
     </script>
 </body>
 </html>
