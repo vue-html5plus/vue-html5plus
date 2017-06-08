@@ -3,14 +3,14 @@
  * @returns {Promise}
  */
 let getCurrentAcceleration = () => {
-    return new Promise(function (resolve, reject) {
-        plus.accelerometer.getCurrentAcceleration(function (acceleration) {
-            resolve(acceleration);
-        }, function (error) {
-            reject(error);
-        });
-    });
-};
+  return new Promise(function (resolve, reject) {
+    window.plus.accelerometer.getCurrentAcceleration((acceleration) => {
+      resolve(acceleration)
+    }, (error) => {
+      reject(error)
+    })
+  })
+}
 
 /**
  * 监听设备加速度变化信息
@@ -18,21 +18,21 @@ let getCurrentAcceleration = () => {
  * @returns {Promise}
  */
 let watchAcceleration = (option) => {
-    return new Promise(function (resolve, reject) {
-        plus.accelerometer.watchAcceleration(function (acceleration) {
-            resolve(acceleration);
-        }, function (error) {
-            reject(error);
-        }, option || {});
-    });
-};
+  return new Promise(function (resolve, reject) {
+    window.plus.accelerometer.watchAcceleration((acceleration) => {
+      resolve(acceleration)
+    }, (error) => {
+      reject(error)
+    }, option || {})
+  })
+}
 
 /**
  * 关闭监听设备加速度信息
  * @param watchId
  */
 let clearWatch = (watchId) => {
-    plus.accelerometer.clearWatch(watchId);
-};
+  window.plus.accelerometer.clearWatch(watchId)
+}
 
-export {getCurrentAcceleration, watchAcceleration, clearWatch};
+export default {getCurrentAcceleration, watchAcceleration, clearWatch}

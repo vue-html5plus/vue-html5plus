@@ -1,50 +1,41 @@
-import {os} from './vhp/os';
-import {plusReady} from './vhp/plusReady'
+import evt from './vhp/event'
+import os from './vhp/os'
+import nativeUI from './vhp/nativeUI'
+import accelerometer from './vhp/accelerometer'
+import geolocation from './vhp/geolocation'
+import networkinfo from './vhp/networkinfo'
+import _ from './utils'
 
-import * as accelerometer from './vhp/accelerometer';
-import * as geolocation from './vhp/geolocation';
-import * as network from './vhp/network';
+const VueHtml5Plus = {}
+VueHtml5Plus.install = (Vue) => {
+  Vue.mixin({
+    beforeCreate () {
+      if (os.plus) {
+        let _options = this.$options
+        evt.plusReady(function () {
+          if (_.isFunction(_options.plusReady)) {
+            _options.plusReady.call(this)
+          }
+          if (_.isFunction(_options.listenNetwork)) {
+            evt.listenNetwork(function () {
+              _options.listenNetwork.call(this)
+            })
+          }
+        }.bind(this))
+      }
+    }
+  })
 
-
-const VueHtml5Plus = (Vue) => {
-    Vue.os = os;
-    Vue.plusReady = plusReady;
-
-    Vue.mixin({
-        created: function () {
-            if (Vue.os.plus) {
-                let context = this;
-                let _options = context.$options;
-                if (typeof _options.plusReady === 'function') {
-                    Vue.plusReady(function () {
-                        _options.plusReady.call(context);
-                    });
-                }
-            }
-        }
-    });
-
-    Object.defineProperties(Vue.prototype, {
-        $accelerometer: {
-            get() {
-                return accelerometer
-            }
-        },
-        $geolocation: {
-            get() {
-                return geolocation
-            }
-        },
-        $network: {
-            get() {
-                return network
-            }
-        }
-    });
-};
-
-if (typeof window !== 'undefined' && window.Vue) {
-    window.Vue.use(VueHtml5Plus);
+  Vue.prototype.plusReady = evt.plusReady
+  Vue.prototype.os = os
+  Vue.prototype.$nativeUI = nativeUI
+  Vue.prototype.$accelerometer = accelerometer
+  Vue.prototype.$geolocation = geolocation
+  Vue.prototype.$networkinfo = networkinfo
 }
 
-export default VueHtml5Plus;
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(VueHtml5Plus)
+}
+
+export default VueHtml5Plus

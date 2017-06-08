@@ -2,6 +2,10 @@
 
 一个基于html5plus标准的vuejs原生拓展插件！
 
+<a href="https://www.npmjs.com/package/vue-html5plus"><img src="https://img.shields.io/npm/dm/vue-html5plus.svg" alt="Downloads"></a>
+<a href="https://www.npmjs.com/package/vue-html5plus"><img src="https://img.shields.io/npm/v/vue-html5plus.svg" alt="Version"></a>
+<a href="https://www.npmjs.com/package/vue-html5plus"><img src="https://img.shields.io/npm/l/vue-html5plus.svg" alt="License"></a>
+
 ## 参考文档
 
 - [vue.js 2.0中文指南](http://cn.vuejs.org/v2/guide/)
@@ -13,6 +17,11 @@
 ```
 <script src="js/vue.js"></script>
 <script src="js/vue-html5plus.js"></script>
+```
+
+CDN:
+```
+https://unpkg.com/vue-html5plus@1.0.0
 ```
 
 在用 Vue.js 构建大型应用时推荐使用 NPM 安装：

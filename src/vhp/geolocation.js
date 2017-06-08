@@ -3,16 +3,15 @@
  * @param option
  * @returns {Promise}
  */
-
 let getCurrentPosition = (option) => {
-    return new Promise(function (resolve, reject) {
-        plus.geolocation.getCurrentPosition(function (position) {
-            resolve(position);
-        }, function (error) {
-            reject(error);
-        }, option || {});
-    });
-};
+  return new Promise((resolve, reject) => {
+    window.plus.geolocation.getCurrentPosition((position) => {
+      resolve(position)
+    }, (error) => {
+      reject(error)
+    }, option || {})
+  })
+}
 
 /**
  * 监听设备位置变化信息
@@ -20,21 +19,21 @@ let getCurrentPosition = (option) => {
  * @returns {Promise}
  */
 let watchPosition = (option) => {
-    return new Promise(function (resolve, reject) {
-        plus.geolocation.watchPosition(function (position) {
-            resolve(position);
-        }, function (error) {
-            reject(error);
-        }, option || {});
-    });
-};
+  return new Promise((resolve, reject) => {
+    window.plus.geolocation.watchPosition((position) => {
+      resolve(position)
+    }, (error) => {
+      reject(error)
+    }, option || {})
+  })
+}
 
 /**
  * 关闭监听设备位置信息
  * @param watchId
  */
 let clearWatch = (watchId) => {
-    plus.geolocation.clearWatch(watchId);
-};
+  window.plus.geolocation.clearWatch(watchId)
+}
 
-export {getCurrentPosition, watchPosition, clearWatch};
+export default {getCurrentPosition, watchPosition, clearWatch}
