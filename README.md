@@ -13,26 +13,18 @@
 
 ## 安装
 
-直接下载并用 `<script>` 标签引入：
+引用 CDN 或 直接下载并用 `<script>` 标签引入：
 ```
-<script src="js/vue.js"></script>
-<script src="js/vue-html5plus.js"></script>
-```
-
-CDN:
-```
-https://unpkg.com/vue-html5plus@1.0.0
+<script src="https://unpkg.com/vue-html5plus@1.0.0"></script>
 ```
 
-在用 Vue.js 构建大型应用时推荐使用 NPM 安装：
+大型项目可以使用 npm 安装：
 ```
-npm install vue --save
 npm install vue-html5plus --save
 ```
-
+调用：
 ```
-import VueHtml5Plus from 'vue-html5plus';
-Vue.use(VueHtml5Plus);
+Vue.use(vue-html5plus);
 ```
 
 ## 入门
@@ -72,16 +64,104 @@ Vue.use(VueHtml5Plus);
                 console.log(JSON.stringify(Vue.os))
             },
             plusReady: function () {
-                var self = this;
                 // 获取定位信息
                 this.$geolocation.getCurrentPosition().then(function (position) {
-                    self.city = position.address.city;
+                    this.city = position.address.city;
                 });
                 // 获取网络信息
-                self.networkType = this.$network.getCurrentNetworkType();
+                this.networkType = this.$networkinfo.getCurrentNetworkType();
             }
         })
     </script>
 </body>
 </html>
+```
+
+## API
+
+### 选项 —— plusReady 和 实例方法 —— $plusReady
+
+vue-htmlplus插件中Vue生命周期中添加了plusReady钩子，但是这个钩子不能用于组件及路由中。
+```
+new Vue({
+    el: '#app',
+    plusReady: function () {
+        // ...
+    }
+})
+```
+
+可以在Vue其他生命周期使用$plusReady方法，如mounted中使用5+ API：
+```
+this.$plusReady(function() {
+    // ...
+})
+```
+
+### 实例属性 —— $os
+
+一个用于判断当前运行环境的对象。
+```
+{
+    "plus":true,
+    "stream":false,
+    "wechat":false,
+    "android":true,
+    "iphone":false,
+    "ipad":false,
+    "version":"6.0",
+    "isBadAndroid":false
+}
+```
+
+### 实例方法 —— $nativeUI
+
+- toast (message, duration, align) ：显示自动消失的提示消息
+- alert (message, alertCB, title, buttonCapture) ：弹出系统提示对话框
+- confirm (message, confirmCB, title, buttons) ：弹出系统确认对话框
+- prompt (message, promptCB, title, tip, buttons) ：弹出系统输入对话框
+- actionSheet (actionsheetStyle, actionsheetCallback) ：弹出系统选择按钮框
+
+### 实例方法 —— $accelerometer(加速度传感器)
+
+获取当前设备的加速度信息:
+```
+this.$accelerometer.getCurrentPosition().then(function (acceleration) {
+    // ...
+});
+```
+
+监听设备加速度变化信息:
+```
+this.$accelerometer.watchAcceleration().then(function (acceleration) {
+    // ...
+});
+```
+
+### 实例方法 —— $geolocation(设备位置信息)
+
+获取当前设备位置信息：
+```
+this.$geolocation.getCurrentPosition(option).then(function (position) {
+    // ...
+});
+```
+
+监听设备位置变化信息：
+```
+this.$geolocation.watchPosition(option).then(function (position) {
+    // ...
+});
+```
+
+关闭监听设备位置信息：
+```
+this.$geolocation.clearWatch(watchId);
+```
+
+### 实例方法 —— $networkinfo
+
+获取网络信息：
+```
+this.$networkinfo.getCurrentNetworkType();
 ```
