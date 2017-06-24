@@ -6,11 +6,6 @@
 <a href="https://www.npmjs.com/package/vue-html5plus"><img src="https://img.shields.io/npm/v/vue-html5plus.svg" alt="Version"></a>
 <a href="https://www.npmjs.com/package/vue-html5plus"><img src="https://img.shields.io/npm/l/vue-html5plus.svg" alt="License"></a>
 
-## 参考文档
-
-- [vue.js 2.0中文指南](http://cn.vuejs.org/v2/guide/)
-- [vue-html5plus入门指南](https://github.com/zhaomenghuan/vue-html5plus/wiki)
-
 ## 安装
 
 引用 CDN 或 直接下载并用 `<script>` 标签引入：
