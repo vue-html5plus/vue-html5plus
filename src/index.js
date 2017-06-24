@@ -26,8 +26,8 @@ VueHtml5Plus.install = (Vue) => {
     }
   })
 
-  Vue.prototype.plusReady = evt.plusReady
-  Vue.prototype.os = os
+  Vue.prototype.$plusReady = evt.plusReady
+  Vue.prototype.$os = os
   Vue.prototype.$nativeUI = nativeUI
   Vue.prototype.$accelerometer = accelerometer
   Vue.prototype.$geolocation = geolocation

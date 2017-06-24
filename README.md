@@ -24,7 +24,7 @@ npm install vue-html5plus --save
 ```
 调用：
 ```
-Vue.use(vue-html5plus);
+Vue.use(VueHtml5Plus);
 ```
 
 ## 入门
@@ -79,7 +79,7 @@ Vue.use(vue-html5plus);
 
 ## API
 
-### 选项 —— plusReady 和 实例方法 —— $plusReady
+### 选项 —— plusReady 和 实例方法 —— plusReady
 
 vue-htmlplus插件中Vue生命周期中添加了plusReady钩子，但是这个钩子不能用于组件及路由中。
 ```
@@ -93,12 +93,12 @@ new Vue({
 
 可以在Vue其他生命周期使用$plusReady方法，如mounted中使用5+ API：
 ```
-this.$plusReady(function() {
+this.plusReady(function() {
     // ...
 })
 ```
 
-### 实例属性 —— $os
+### 实例属性 —— os
 
 一个用于判断当前运行环境的对象。
 ```
